@@ -1,26 +1,35 @@
 import React, { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link, useParams, Redirect
+} from "react-router-dom"
 
-const Menu = () => {
-  const padding = {
-    paddingRight: 5
-  }
-  return (
-    <div>
-      <a href='#' style={padding}>anecdotes</a>
-      <a href='#' style={padding}>create new</a>
-      <a href='#' style={padding}>about</a>
-    </div>
-  )
-}
-
-const AnecdoteList = ({ anecdotes }) => (
+const AnecdoteList = ({anecdotes}) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(a =>
+        <li key={a.id}>
+          <Link to={`/anecdotes/${a.id}`}>{a.content}</Link>
+        </li>
+      )}
     </ul>
   </div>
 )
+
+const Anecdote = ({ anecdotes }) => {
+  const padding = { padding: 15 }
+  const id = useParams().id
+  const anecdote = anecdotes.find(a => Number(a.id) === Number(id))
+  return (
+    <div>
+      <h2>ID {anecdote.id} by {anecdote.author}</h2>
+      <div style={padding}>"{anecdote.content}"</div>
+      <div style={padding}>Has {anecdote.votes} votes</div>
+      <div style={padding}>for more info see <a href={anecdote.info}>{anecdote.info}</a></div>
+    </div>
+  )
+}
 
 const About = () => (
   <div>
@@ -39,7 +48,6 @@ const About = () => (
 const Footer = () => (
   <div>
     Anecdote app for <a href='https://courses.helsinki.fi/fi/tkt21009'>Full Stack -websovelluskehitys</a>.
-
     See <a href='https://github.com/fullstack-hy/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2019/routed-anecdotes/blob/master/src/App.js</a> for the source code.
   </div>
 )
@@ -48,7 +56,6 @@ const CreateNew = (props) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
-
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -100,6 +107,7 @@ const App = () => {
       id: '2'
     }
   ])
+  const [added, setNewAdded] = useState(false);
 
   const [notification, setNotification] = useState('')
 
@@ -122,13 +130,34 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
 
+  const padding = { padding: 5 }
+
   return (
     <div>
       <h1>Software anecdotes</h1>
-      <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
+      
+      <Router>
+      <div>
+          <Link style={padding} to="/">anecdotes</Link>
+          <Link style={padding} to="/create">create</Link>
+          <Link style={padding} to="/about">about</Link>
+      </div>
+        <Switch>
+          <Route path="/anecdotes/:id">
+            <Anecdote anecdotes={anecdotes} />
+          </Route>
+          <Route path="/create">
+            <CreateNew addNew={addNew} />
+          </Route>
+          <Route path="/about">
+          <About />
+          </Route>
+          <Route path="/">
+            <AnecdoteList anecdotes={anecdotes} />
+          </Route>
+        </Switch>
+      </Router>      
+      
       <Footer />
     </div>
   )
