@@ -90,6 +90,17 @@ const CreateNew = (props) => {
 
 }
 
+const Notification = ({ message }) => {
+  if (message === undefined) {
+    return null
+  }
+  return (
+    <div className="error">
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
     {
@@ -107,13 +118,28 @@ const App = () => {
       id: '2'
     }
   ])
-  const [added, setNewAdded] = useState(false);
-
+  const [newAdded, setNewAdded] = useState(undefined)
   const [notification, setNotification] = useState('')
+
+  const changeNotification = (message) => {
+    setNotification(message)
+    setTimeout(() => {
+      setNotification(undefined)
+    }, 10000)
+  }
+
+  const changeNewAdded = (anecdote) => {
+    setNewAdded(anecdote)
+    setTimeout(() => {
+      setNewAdded(undefined)
+    }, 1000)
+  }
 
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    changeNotification("New anecdote was added: " + anecdote.content)
+    changeNewAdded(anecdote);
   }
 
   const anecdoteById = (id) =>
@@ -142,12 +168,13 @@ const App = () => {
           <Link style={padding} to="/create">create</Link>
           <Link style={padding} to="/about">about</Link>
       </div>
+      <Notification message={notification} />
         <Switch>
           <Route path="/anecdotes/:id">
             <Anecdote anecdotes={anecdotes} />
           </Route>
           <Route path="/create">
-            <CreateNew addNew={addNew} />
+            {newAdded ? <Redirect to="/" /> : <CreateNew addNew={addNew} />}
           </Route>
           <Route path="/about">
           <About />
