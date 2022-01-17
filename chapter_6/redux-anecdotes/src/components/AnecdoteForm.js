@@ -15,7 +15,10 @@ const AnecdoteForm = (props) => {
 
     return (
         <form onSubmit={addAnecdote}>
-            <input name="anecdote" />
+            Abbreviation
+            <input name="abbrev" />
+            Details
+            <input size= '100' name="anecdote" />
             <button type="submit">add</button>
         </form>
     )

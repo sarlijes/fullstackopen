@@ -1,5 +1,7 @@
-import React from 'react'
+
 import ReactDOM from 'react-dom'
+import React, { useState, useEffect } from 'react'
+
 
 const Header = (props) => {
     return (
@@ -39,32 +41,49 @@ const Part = (props) => {
     )
 }
 
-const App = () => {
-    const course = {
-        name: 'Half Stack -sovelluskehitys',
-        parts: [
-            {
-                name: 'Reactin perusteet',
-                exercises: 10
-            },
-            {
-                name: 'Tiedonvälitys propseilla',
-                exercises: 7
-            },
-            {
-                name: 'Komponenttien tila',
-                exercises: 14
-            }
-        ]
-    }
+// const App = () => {
+//     const course = {
+//         name: 'Half Stack -sovelluskehitys',
+//         parts: [
+//             {
+//                 name: 'Reactin perusteet',
+//                 exercises: 10
+//             },
+//             {
+//                 name: 'Tiedonvälitys propseilla',
+//                 exercises: 7
+//             },
+//             {
+//                 name: 'Komponenttien tila',
+//                 exercises: 14
+//             }
+//         ]
+//     }
 
-    return (
-        <div>
-            <Header course={course.name} />
-            <Content parts={course.parts} />
-            <Total parts={course.parts} />
-        </div>
-    )
-}
+//     return (
+//         <div>
+//             <Header course={course.name} />
+//             <Content parts={course.parts} />
+//             <Total parts={course.parts} />
+//         </div>
+//     )
+// }
+
+
+const App = () => {
+    const list = [{m:"Hei"},{m:"Hey"},{m:"Hi"}]
+    
+    return ( <div> {list.forEach(elem => (<div key={elem.m}> {elem.m} </div>))} </div> )
+  }
+
 
 ReactDOM.render(<App />, document.getElementById('root'))
+
+
+// a.
+// return list.map(elem => (<div key={elem.m}> {elem.m} </div>))
+
+// d.
+// return ( <div> {list.map(elem => (<div key={elem.m}> {elem.m} </div>))} </div> )
+// e.
+// return ( <div> {list.forEach(elem => (<div key={elem.m}> {elem.m} </div>))} </div> )
