@@ -1,15 +1,23 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
-const useCountry = (type) => {
-  const [value, setValue] = useState('')
+export const useCountry = (name) => {
+  const [country, setCountry] = useState(null)
 
-  const onChange = (event) => {
-    setValue(event.target.value)
-  }
+  const url = 'https://restcountries.com/v2/name/' + name + '?fullText=true'
+
+  useEffect(() => {
+    if (name) {
+      axios
+        .get(url)
+        .then(response => 
+          setCountry(response.data[0])
+        )
+    }
+  }, [name, url])
 
   return {
-    type,
-    value,
-    onChange
+    found: (country !== null && typeof country !== 'undefined'),
+    data: { ...country }
   }
 }
