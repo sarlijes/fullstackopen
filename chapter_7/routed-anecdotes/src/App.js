@@ -3,8 +3,9 @@ import {
   BrowserRouter as Router,
   Switch, Route, Link, useParams, Redirect
 } from "react-router-dom"
+import { useField } from './hooks'
 
-const AnecdoteList = ({anecdotes}) => (
+const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
@@ -53,9 +54,6 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -66,25 +64,26 @@ const CreateNew = (props) => {
       votes: 0
     })
   }
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
 
   return (
     <div>
       <h2>create a new anecdote</h2>
+
       <form onSubmit={handleSubmit}>
-        <div>
-          content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
-        </div>
-        <div>
-          author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
-        </div>
-        <div>
-          url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
-        </div>
+        content:
+        <input  {...content} />
+        <br />
+        author:
+        <input {...author} />
+        <br />
+        url for more info
+        <input {...info} />
         <button>create</button>
       </form>
+
     </div>
   )
 
@@ -161,14 +160,14 @@ const App = () => {
   return (
     <div>
       <h1>Software anecdotes</h1>
-      
+
       <Router>
-      <div>
+        <div>
           <Link style={padding} to="/">anecdotes</Link>
           <Link style={padding} to="/create">create</Link>
           <Link style={padding} to="/about">about</Link>
-      </div>
-      <Notification message={notification} />
+        </div>
+        <Notification message={notification} />
         <Switch>
           <Route path="/anecdotes/:id">
             <Anecdote anecdotes={anecdotes} />
@@ -177,14 +176,14 @@ const App = () => {
             {newAdded ? <Redirect to="/" /> : <CreateNew addNew={addNew} />}
           </Route>
           <Route path="/about">
-          <About />
+            <About />
           </Route>
           <Route path="/">
             <AnecdoteList anecdotes={anecdotes} />
           </Route>
         </Switch>
-      </Router>      
-      
+      </Router>
+
       <Footer />
     </div>
   )
