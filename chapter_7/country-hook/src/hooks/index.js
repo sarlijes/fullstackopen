@@ -4,17 +4,15 @@ import axios from 'axios'
 export const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  const url = 'https://restcountries.com/v2/name/' + name + '?fullText=true'
-
   useEffect(() => {
     if (name) {
       axios
-        .get(url)
+        .get('https://restcountries.com/v2/name/' + name + '?fullText=true')
         .then(response => 
           setCountry(response.data[0])
         )
     }
-  }, [name, url])
+  }, [name])
 
   return {
     found: (country !== null && typeof country !== 'undefined'),
