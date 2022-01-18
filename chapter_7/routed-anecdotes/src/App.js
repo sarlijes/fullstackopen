@@ -54,6 +54,9 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -64,9 +67,13 @@ const CreateNew = (props) => {
       votes: 0
     })
   }
-  const content = useField('text')
-  const author = useField('text')
-  const info = useField('text')
+
+  const handleReset = (e) => {
+    e.preventDefault()
+    content.reset()
+    author.reset()
+    info.reset()
+  }
 
   return (
     <div>
@@ -81,12 +88,12 @@ const CreateNew = (props) => {
         <br />
         url for more info
         <input {...info} />
+        <br></br>
         <button>create</button>
+        <button onClick={handleReset}>reset</button>
       </form>
-
     </div>
   )
-
 }
 
 const Notification = ({ message }) => {
