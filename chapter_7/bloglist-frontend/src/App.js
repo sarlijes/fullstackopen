@@ -7,26 +7,29 @@ import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
 import Bloglist from "./components/Bloglist"
 import { useField } from "./hooks/index"
-import { createStore } from "redux"
+import { createStore, combineReducers } from "redux"
+import notificationReducer from "./reducers/notificationReducer"
+import blogReducer from "./reducers/blogReducer"
 
-const notificationReducer = (state = "", action) => {
-    if (action.type === "NEW_NOTIFICATION") {
-        state = action.content
-    }
-    if (action.type === "EMPTY_NOTIFICATION") {
-        state = ""
-    }
-    return state
-}
+const reducer = combineReducers({
+    notification: notificationReducer,
+    blogs: blogReducer
+})
 
-const store = createStore(notificationReducer)
+const store = createStore(reducer)
+
+console.log(store.getState())
+console.log("🚀 ~ file: App.js ~ line 22 ~ store.getState()", store.getState())
+
+store.subscribe(() => console.log(store.getState()))
+// store.dispatch(filterChange("IMPORTANT"))
 
 const Notification = () => {
     if (store.getState() === "") {
         return null
     }
     return (
-        <div className="error">{store.getState()}</div>
+        <div className="error">{store.getState().notification}</div>
     )
 }
 
@@ -59,7 +62,13 @@ const App = () => {
         blogService
             .getAll()
             .then(blogsFromDatabase => {
-                setBlogs(blogsFromDatabase)
+                console.log("🚀 ~ file: App.js ~ line 64 ~ useEffect ~ blogsFromDatabase", blogsFromDatabase)
+                console.log("")
+                // setBlogs(blogsFromDatabase)
+                store.dispatch({
+                    type: "ADD_ALL",
+                    content: blogsFromDatabase,
+                })
             })
     }, [])
 
