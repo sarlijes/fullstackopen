@@ -7,19 +7,31 @@ import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
 import Bloglist from "./components/Bloglist"
 import { useField } from "./hooks/index"
+import { createStore } from "redux"
 
-const Notification = ({ message }) => {
-    if (message === undefined) {
+const notificationReducer = (state = "", action) => {
+    if (action.type === "NEW_NOTIFICATION") {
+        state = action.content
+    }
+    if (action.type === "EMPTY_NOTIFICATION") {
+        state = ""
+    }
+    return state
+}
+
+const store = createStore(notificationReducer)
+
+const Notification = () => {
+    if (store.getState() === "") {
         return null
     }
     return (
-        <div className="error">{message}</div>
+        <div className="error">{store.getState()}</div>
     )
 }
 
 const App = () => {
     const [blogs, setBlogs] = useState([])
-    const [notification, setNotification] = useState()
     const [user, setUser] = useState(null)
     const [selectedBlog, setSelectedBlog] = useState(null)
 
@@ -31,9 +43,15 @@ const App = () => {
     const password = useField("password")
 
     const changeNotification = (message) => {
-        setNotification(message)
+        store.dispatch({
+            type: "NEW_NOTIFICATION",
+            content: message,
+        })
         setTimeout(() => {
-            setNotification(undefined)
+            store.dispatch({
+                type: "EMPTY_NOTIFICATION",
+                content: message,
+            })
         }, 3000)
     }
 
@@ -139,7 +157,6 @@ const App = () => {
             })
     }
 
-    // render() {
     const login = () => (
         <div className="App">
             <header className="App-header">
@@ -147,7 +164,7 @@ const App = () => {
             </header>
             <div className="App-body">
                 <h2>Log in to application</h2>
-                <div><Notification message={notification} /></div>
+                <div><Notification message={store.getState()} /></div>
                 <LoginForm className="loginform"
                     username={skipReset(username)}
                     password={skipReset(password)}
@@ -174,7 +191,7 @@ const App = () => {
                     <p>{user.name} logged in</p>
                     <div><button onClick={handleLogout}>Log out</button></div>
                     <div></div>
-                    <Notification message={notification} />
+                    <Notification />
                     <Togglable buttonLabel='new blog' ref={blogFormRef} >
                         {/* <Togglable buttonLabel='add new blog' ref={BlogForm} > */}
                         <h4>Add new blog post</h4>
