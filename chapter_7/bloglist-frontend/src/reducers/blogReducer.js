@@ -11,7 +11,14 @@ const blogReducer = (state = [], action) => {
 export const addBlog = blog => {
     return {
         type: "ADD_BLOG",
-        blog,
+        blog: blog,
+    }
+}
+
+export const addAllBlogs = blogList => {
+    return {
+        type: "ADD_ALL",
+        content: blogList,
     }
 }
 

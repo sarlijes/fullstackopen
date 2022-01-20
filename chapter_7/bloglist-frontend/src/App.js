@@ -9,7 +9,7 @@ import Bloglist from "./components/Bloglist"
 import { useField } from "./hooks/index"
 import { createStore, combineReducers } from "redux"
 import notificationReducer from "./reducers/notificationReducer"
-import blogReducer from "./reducers/blogReducer"
+import blogReducer, { addAllBlogs } from "./reducers/blogReducer"
 
 const reducer = combineReducers({
     notification: notificationReducer,
@@ -17,12 +17,6 @@ const reducer = combineReducers({
 })
 
 const store = createStore(reducer)
-
-console.log(store.getState())
-console.log("🚀 ~ file: App.js ~ line 22 ~ store.getState()", store.getState())
-
-store.subscribe(() => console.log(store.getState()))
-// store.dispatch(filterChange("IMPORTANT"))
 
 const Notification = () => {
     if (store.getState() === "") {
@@ -34,7 +28,6 @@ const Notification = () => {
 }
 
 const App = () => {
-    const [blogs, setBlogs] = useState([])
     const [user, setUser] = useState(null)
     const [selectedBlog, setSelectedBlog] = useState(null)
 
@@ -50,6 +43,7 @@ const App = () => {
             type: "NEW_NOTIFICATION",
             content: message,
         })
+        // TODO refactor to notificationReducer.js
         setTimeout(() => {
             store.dispatch({
                 type: "EMPTY_NOTIFICATION",
@@ -62,15 +56,11 @@ const App = () => {
         blogService
             .getAll()
             .then(blogsFromDatabase => {
-                console.log("🚀 ~ file: App.js ~ line 64 ~ useEffect ~ blogsFromDatabase", blogsFromDatabase)
-                console.log("")
-                // setBlogs(blogsFromDatabase)
-                store.dispatch({
-                    type: "ADD_ALL",
-                    content: blogsFromDatabase,
-                })
+                store.dispatch(addAllBlogs(blogsFromDatabase))
             })
     }, [])
+
+    const blogs = store.getState().blogs
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
@@ -115,7 +105,7 @@ const App = () => {
         try {
             blogService
                 .deleteBlog(blogToBeDeleted.id)
-            setBlogs(allOtherBlogs)
+            store.dispatch(addAllBlogs(allOtherBlogs))
             changeNotification(`Deleted ${blogToBeDeleted.title}`)
         } catch (err) {
             console.log(err)
@@ -140,7 +130,7 @@ const App = () => {
                 url: blogToBeLiked.url,
                 user: blogToBeLiked.user._id
             })
-            setBlogs(allOtherBlogs.concat(updatedBlog))
+            store.dispatch(addAllBlogs(allOtherBlogs.concat(updatedBlog)))
             changeNotification(`You have liked ${blogToBeLiked.title} <3`)
         } catch (err) {
             console.log(err)
@@ -159,7 +149,7 @@ const App = () => {
         blogService
             .create(blogObject)
             .then(data => {
-                setBlogs(blogs.concat(data))
+                store.dispatch(addAllBlogs(blogs.concat(data)))
                 newAuthor.reset("")
                 newTitle.reset("")
                 newUrl.reset("")
