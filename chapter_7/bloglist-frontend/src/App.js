@@ -38,12 +38,14 @@ const App = () => {
     const username = useField("text")
     const password = useField("password")
 
+    const [isLoading, setLoading] = useState(true)
+
     const changeNotification = (message) => {
         store.dispatch({
             type: "NEW_NOTIFICATION",
             content: message,
         })
-        // TODO refactor to notificationReducer.js
+        // TODO refactor the dispatched objects to notificationReducer.js
         setTimeout(() => {
             store.dispatch({
                 type: "EMPTY_NOTIFICATION",
@@ -53,12 +55,14 @@ const App = () => {
     }
 
     useEffect(() => {
+        console.log("effect")
         blogService
             .getAll()
             .then(blogsFromDatabase => {
                 store.dispatch(addAllBlogs(blogsFromDatabase))
+                setLoading(false)
             })
-    }, [])
+    }, [isLoading])
 
     const blogs = store.getState().blogs
 

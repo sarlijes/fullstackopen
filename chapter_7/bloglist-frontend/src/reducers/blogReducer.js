@@ -22,4 +22,11 @@ export const addAllBlogs = blogList => {
     }
 }
 
+export const initAllBlogs = blogList => {
+    return {
+        type: "ADD_ALL",
+        content: blogList,
+    }
+}
+
 export default blogReducer
