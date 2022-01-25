@@ -9,6 +9,7 @@ import Bloglist from "./components/Bloglist"
 import { useField } from "./hooks/index"
 import { addAllBlogs } from "./reducers/blogReducer"
 import { useDispatch, useSelector } from "react-redux"
+import { login, logout } from "./reducers/userReducer"
 
 const Notification = () => {
     const notification = useSelector(state => state.notification)
@@ -21,7 +22,6 @@ const Notification = () => {
 }
 
 const App = () => {
-    const [user, setUser] = useState(null)
     const [selectedBlog, setSelectedBlog] = useState(null)
 
     const newAuthor = useField("text")
@@ -59,14 +59,17 @@ const App = () => {
         state.blogs.sort((a, b) =>
             a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1))
 
-    useEffect(() => {
-        const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
-        if (loggedUserJSON) {
-            const user = JSON.parse(loggedUserJSON)
-            setUser(user)
-            blogService.setToken(user.token)
-        }
-    }, [])
+    const user = useSelector(state => state.user)
+
+    // TODO is this needed?
+    // useEffect(() => {
+    //     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
+    //     if (loggedUserJSON) {
+    //         const user = JSON.parse(loggedUserJSON)
+    //         dispatch(login(user))
+    //         blogService.setToken(user.token)
+    //     }
+    // }, [dispatch])
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -82,7 +85,7 @@ const App = () => {
                 "loggedBlogAppUser", JSON.stringify(user)
             )
             blogService.setToken(user.token)
-            setUser(user)
+            dispatch(login(user))
             username.reset("")
             password.reset("")
         } catch (exception) {
@@ -93,7 +96,7 @@ const App = () => {
     const handleLogout = async (event) => {
         event.preventDefault()
         blogService.removeToken()
-        setUser(null)
+        dispatch(logout())
     }
 
     const handleDeleteButtonPress = (id) => async () => {
@@ -153,7 +156,7 @@ const App = () => {
             })
     }
 
-    const login = () => (
+    const renderLogin = () => (
         <div className="App">
             <header className="App-header">
                 <h1>Blog post app</h1>
@@ -212,11 +215,10 @@ const App = () => {
             </div>
         </div>
     )
-    // }
 
     return (
         <div>
-            {user === null ? login() : blogList()}
+            {user === null ? renderLogin() : blogList()}
         </div>
     )
 }
