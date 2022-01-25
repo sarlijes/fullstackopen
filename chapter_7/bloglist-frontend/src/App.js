@@ -7,6 +7,7 @@ import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
 import Bloglist from "./components/Bloglist"
 import Notification from "./components/Notification"
+import Users from "./components/Users"
 import { useField } from "./hooks/index"
 import { addAllBlogs } from "./reducers/blogReducer"
 import { useDispatch, useSelector } from "react-redux"
@@ -54,15 +55,14 @@ const App = () => {
 
     const user = useSelector(state => state.user)
 
-    // TODO is this needed?
-    // useEffect(() => {
-    //     const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
-    //     if (loggedUserJSON) {
-    //         const user = JSON.parse(loggedUserJSON)
-    //         dispatch(login(user))
-    //         blogService.setToken(user.token)
-    //     }
-    // }, [dispatch])
+    useEffect(() => {
+        const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
+        if (loggedUserJSON) {
+            const user = JSON.parse(loggedUserJSON)
+            dispatch(login(user))
+            blogService.setToken(user.token)
+        }
+    }, [dispatch])
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -185,13 +185,6 @@ const App = () => {
             </header>
             <a href="" onClick={toPage("blogs")} style={padding}>blogs</a>
             <a href="" onClick={toPage("users")} style={padding}>users</a>
-        </div>
-    )
-
-    const Users = () => (
-        <div className="App">
-            <Header />
-            <h2>Users</h2>
         </div>
     )
 
