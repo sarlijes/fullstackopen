@@ -22,13 +22,12 @@ const renderTableHeader = () => {
 }
 
 const Users = ({ userList }) => {
-    console.log("🚀 ~ file: Users.js ~ line 18 ~ Users ~ userList", userList)
     return (
         <div className="App-body">
             <h1 id='title'>Users</h1>
             <table id='users'>
                 <tbody>
-                    <tr>{renderTableHeader()}</tr>
+                    {renderTableHeader()}
                     {renderTableData(userList)}
                 </tbody>
             </table>
