@@ -7,23 +7,16 @@ import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
 import Bloglist from "./components/Bloglist"
 import { useField } from "./hooks/index"
-import { createStore, combineReducers } from "redux"
-import notificationReducer from "./reducers/notificationReducer"
-import blogReducer, { addAllBlogs } from "./reducers/blogReducer"
-
-const reducer = combineReducers({
-    notification: notificationReducer,
-    blogs: blogReducer
-})
-
-const store = createStore(reducer)
+import { addAllBlogs } from "./reducers/blogReducer"
+import { useDispatch, useSelector } from "react-redux"
 
 const Notification = () => {
-    if (store.getState() === "") {
+    const notification = useSelector(state => state.notification)
+    if (notification === "") {
         return null
     }
     return (
-        <div className="error">{store.getState().notification}</div>
+        <div className="error">{notification}</div>
     )
 }
 
@@ -38,16 +31,16 @@ const App = () => {
     const username = useField("text")
     const password = useField("password")
 
-    const [isLoading, setLoading] = useState(true)
+    const dispatch = useDispatch()
 
     const changeNotification = (message) => {
-        store.dispatch({
+        dispatch({
             type: "NEW_NOTIFICATION",
             content: message,
         })
         // TODO refactor the dispatched objects to notificationReducer.js
         setTimeout(() => {
-            store.dispatch({
+            dispatch({
                 type: "EMPTY_NOTIFICATION",
                 content: message,
             })
@@ -55,16 +48,14 @@ const App = () => {
     }
 
     useEffect(() => {
-        console.log("effect")
         blogService
             .getAll()
             .then(blogsFromDatabase => {
-                store.dispatch(addAllBlogs(blogsFromDatabase))
-                setLoading(false)
+                dispatch(addAllBlogs(blogsFromDatabase))
             })
-    }, [isLoading])
+    }, [dispatch])
 
-    const blogs = store.getState().blogs
+    const blogs = useSelector(state => state.blogs)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
@@ -109,7 +100,7 @@ const App = () => {
         try {
             blogService
                 .deleteBlog(blogToBeDeleted.id)
-            store.dispatch(addAllBlogs(allOtherBlogs))
+            dispatch(addAllBlogs(allOtherBlogs))
             changeNotification(`Deleted ${blogToBeDeleted.title}`)
         } catch (err) {
             console.log(err)
@@ -134,7 +125,7 @@ const App = () => {
                 url: blogToBeLiked.url,
                 user: blogToBeLiked.user._id
             })
-            store.dispatch(addAllBlogs(allOtherBlogs.concat(updatedBlog)))
+            dispatch(addAllBlogs(allOtherBlogs.concat(updatedBlog)))
             changeNotification(`You have liked ${blogToBeLiked.title} <3`)
         } catch (err) {
             console.log(err)
@@ -153,7 +144,7 @@ const App = () => {
         blogService
             .create(blogObject)
             .then(data => {
-                store.dispatch(addAllBlogs(blogs.concat(data)))
+                dispatch(addAllBlogs(blogs.concat(data)))
                 newAuthor.reset("")
                 newTitle.reset("")
                 newUrl.reset("")
@@ -167,7 +158,7 @@ const App = () => {
             </header>
             <div className="App-body">
                 <h2>Log in to application</h2>
-                <div><Notification message={store.getState()} /></div>
+                <div><Notification message={"store.getState()"} /></div>
                 <LoginForm className="loginform"
                     username={skipReset(username)}
                     password={skipReset(password)}
