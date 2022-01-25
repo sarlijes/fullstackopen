@@ -1,24 +1,17 @@
-const userReducer = (state = null, action) => {
-    if (action.type === "LOGIN") {
-        state = action.user
-    }
-    if (action.type === "LOGOUT") {
-        state = null
+const userReducer = (state = [], action) => {
+    // if (action.type === "ADD_BLOG") {
+    //     state.push(action.content)
+    // }
+    if (action.type === "ADD_ALL_USERS") {
+        state = action.content
     }
     return state
 }
 
-export const login = user => {
+export const addAllUsers = userList => {
     return {
-        type: "LOGIN",
-        user: user,
-    }
-}
-
-export const logout = () => {
-    return {
-        type: "LOGOUT",
-        user: null,
+        type: "ADD_ALL_USERS",
+        content: userList,
     }
 }
 

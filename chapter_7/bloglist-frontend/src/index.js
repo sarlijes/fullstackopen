@@ -7,12 +7,14 @@ import { createStore, combineReducers } from "redux"
 
 import notificationReducer from "./reducers/notificationReducer"
 import blogReducer from "./reducers/blogReducer"
+import loggedInUserReducer from "./reducers/loggedInUserReducer"
 import userReducer from "./reducers/userReducer"
 
 const reducer = combineReducers({
     notification: notificationReducer,
     blogs: blogReducer,
-    user: userReducer
+    loggedInUser: loggedInUserReducer,
+    userList: userReducer
 })
 
 const store = createStore(reducer)

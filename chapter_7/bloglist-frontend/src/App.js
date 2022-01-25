@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import "./App.css"
 import blogService from "./services/blogService"
 import loginService from "./services/loginService"
+import userService from "./services/userService"
 import BlogForm from "./components/BlogForm"
 import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
@@ -11,7 +12,8 @@ import Users from "./components/Users"
 import { useField } from "./hooks/index"
 import { addAllBlogs } from "./reducers/blogReducer"
 import { useDispatch, useSelector } from "react-redux"
-import { login, logout } from "./reducers/userReducer"
+import { login, logout } from "./reducers/loggedInUserReducer"
+import { addAllUsers } from "./reducers/userReducer"
 
 import {
     BrowserRouter as Router,
@@ -53,11 +55,23 @@ const App = () => {
             })
     }, [dispatch])
 
+    useEffect(() => {
+        userService
+            .getAll()
+            .then(userList => {
+                dispatch(addAllUsers(userList))
+            })
+    }, [dispatch])
+
     const blogs = useSelector(state =>
         state.blogs.sort((a, b) =>
             a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1))
 
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.loggedInUser)
+
+    const userList = useSelector(function (state) {
+        return state.userList
+    })
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
@@ -225,16 +239,12 @@ const App = () => {
 
                     <Switch>
                         <Route path="/users">
-                            <Users />
+                            <Users userList={userList} />
                         </Route>
                         <Route path="/">
                             <Blogs />
                         </Route>
                     </Switch>
-
-                    <div>
-                        <i>Note app, Department of Computer Science 2021</i>
-                    </div>
                 </Router>}
         </div>
     )
