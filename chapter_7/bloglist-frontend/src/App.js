@@ -55,7 +55,9 @@ const App = () => {
             })
     }, [dispatch])
 
-    const blogs = useSelector(state => state.blogs)
+    const blogs = useSelector(state =>
+        state.blogs.sort((a, b) =>
+            a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1))
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem("loggedBlogAppUser")
@@ -126,7 +128,7 @@ const App = () => {
                 user: blogToBeLiked.user._id
             })
             dispatch(addAllBlogs(allOtherBlogs.concat(updatedBlog)))
-            changeNotification(`You have liked ${blogToBeLiked.title} <3`)
+            changeNotification(`You have liked ${blogToBeLiked.title}`)
         } catch (err) {
             console.log(err)
         }

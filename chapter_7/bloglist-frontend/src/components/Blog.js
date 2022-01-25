@@ -27,7 +27,7 @@ const Blog = ({ blog, handleDeleteButtonPress, handleSelectBlogChange, handleLik
     return (
         <div style={blogStyle} className="blog">
 
-            <div className="author">{blog.author}: <a href={blog.url}>{blog.title}</a></div>
+            <div className="author"><a href={blog.url}>{blog.title}</a> by {blog.author}</div>
 
             {blog.showDetails === true ?
                 renderDetails() :
