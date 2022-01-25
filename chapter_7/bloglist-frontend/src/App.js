@@ -200,8 +200,6 @@ const App = () => {
         <div className="App">
             <div className="App-body">
                 <div>
-                    <p>{user.name} logged in</p>
-                    <Button type="submit" primary='' onClick={handleLogout}> Log out</Button>
                     <Notification />
                     <Togglable buttonLabel='new blog' ref={blogFormRef} >
                         {/* <Togglable buttonLabel='add new blog' ref={BlogForm} > */}
@@ -235,6 +233,8 @@ const App = () => {
                     <div>
                         <Link style={padding} to="/">blogs</Link>
                         <Link style={padding} to="/users">users</Link>
+                        | {user.name} logged in
+                        <Button type="submit" primary='' onClick={handleLogout}> Log out</Button>
                     </div>
 
                     <Switch>
