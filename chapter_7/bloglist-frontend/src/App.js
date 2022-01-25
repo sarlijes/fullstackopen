@@ -15,6 +15,7 @@ import { login, logout } from "./reducers/userReducer"
 
 const App = () => {
     const [selectedBlog, setSelectedBlog] = useState(null)
+    const [page, setPage] = useState("blogs")
 
     const newAuthor = useField("text")
     const newTitle = useField("text")
@@ -172,11 +173,44 @@ const App = () => {
         return hookWithoutAnyReset
     }
 
-    const blogList = () => (
-        <div className="App">
+    const toPage = (page) => (event) => {
+        event.preventDefault()
+        setPage(page)
+    }
+
+    const Header = () => (
+        <div>
             <header className="App-header">
                 <h1>Blog post app</h1>
             </header>
+            <a href="" onClick={toPage("blogs")} style={padding}>blogs</a>
+            <a href="" onClick={toPage("users")} style={padding}>users</a>
+        </div>
+    )
+
+    const Users = () => (
+        <div className="App">
+            <Header />
+            <h2>Users</h2>
+        </div>
+    )
+
+    const content = () => {
+        if (page === "blogs") {
+            return <Blogs />
+        } else if (page === "users") {
+            return <Users />
+        }
+    }
+    const padding = {
+        padding: 5
+    }
+    const Blogs = () => (
+        <div className="App">
+
+            <Header />
+
+
             <div className="App-body">
                 <div>
                     <p>{user.name} logged in</p>
@@ -210,7 +244,7 @@ const App = () => {
 
     return (
         <div>
-            {user === null ? renderLogin() : blogList()}
+            {user === null ? renderLogin() : content()}
         </div>
     )
 }
