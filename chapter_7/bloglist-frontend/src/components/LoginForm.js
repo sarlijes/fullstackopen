@@ -1,16 +1,16 @@
 import React from "react"
+import { Button, Input } from "./StyledComponents"
 
 const LoginForm = ({ handleLogin, username, password }) => (
     <form onSubmit={handleLogin}>
         <div>username
-            <input {...username} />
+            <Input {...username} />
         </div>
         <div>password
-            <input {...password} />
+            <Input {...password} />
         </div>
-        <button type="submit" className="login">login</button>
+        <Button type="submit" className="login">login</Button>
     </form>
-
 )
 
 export default LoginForm

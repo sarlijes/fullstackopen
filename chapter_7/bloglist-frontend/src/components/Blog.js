@@ -1,4 +1,5 @@
 import React from "react"
+import { Button } from "./StyledComponents"
 
 const Blog = ({ blog, handleDeleteButtonPress, handleSelectBlogChange, handleLike, user }) => {
 
@@ -14,14 +15,14 @@ const Blog = ({ blog, handleDeleteButtonPress, handleSelectBlogChange, handleLik
         <>
             <div>Posted by: {blog.user.name}</div>
             <div className="likes">Likes: {blog.likes}</div>
-            <button onClick={handleLike(blog)}>like</button>
+            <Button onClick={handleLike(blog)}>like</Button>
         </>
     )
     const renderShowInfoButton = () => (
-        <button onClick={handleSelectBlogChange}>Show more info</button>
+        <Button onClick={handleSelectBlogChange}>Show more info</Button>
     )
     const renderDeleteButton = () => (
-        <button onClick={handleDeleteButtonPress(blog.id)}>Delete</button>
+        <Button onClick={handleDeleteButtonPress(blog.id)}>Delete</Button>
     )
 
     return (

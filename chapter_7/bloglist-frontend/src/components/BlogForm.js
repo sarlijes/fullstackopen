@@ -1,18 +1,19 @@
 import React from "react"
+import { Button, Input } from "./StyledComponents"
 
 const BlogForm = ({ newTitle, newAuthor, newUrl, createNewBlogPost }) => (
     <div>
         <form onSubmit={createNewBlogPost}>
             <div><label>Title: </label>
-                <input {...newTitle} />
+                <Input {...newTitle} />
             </div>
             <div><label>Author:</label>
-                <input {...newAuthor} />
+                <Input {...newAuthor} />
             </div>
             <div><label>URL: </label>
-                <input {...newUrl} />
+                <Input {...newUrl} />
             </div>
-            <button type='submit'>Submit</button>
+            <Button type='submit'>Submit</Button>
         </form>
     </div>
 )

@@ -9,6 +9,7 @@ import Togglable from "./components/Togglable"
 import Bloglist from "./components/Bloglist"
 import Notification from "./components/Notification"
 import Users from "./components/Users"
+import { Button } from "./components/StyledComponents"
 import { useField } from "./hooks/index"
 import { addAllBlogs } from "./reducers/blogReducer"
 import { useDispatch, useSelector } from "react-redux"
@@ -200,8 +201,7 @@ const App = () => {
             <div className="App-body">
                 <div>
                     <p>{user.name} logged in</p>
-                    <div><button onClick={handleLogout}>Log out</button></div>
-                    <div></div>
+                    <Button type="submit" primary='' onClick={handleLogout}> Log out</Button>
                     <Notification />
                     <Togglable buttonLabel='new blog' ref={blogFormRef} >
                         {/* <Togglable buttonLabel='add new blog' ref={BlogForm} > */}
