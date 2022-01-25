@@ -5,7 +5,7 @@ const renderTableData = ( userList ) => {
         const { id, name } = user
         return (
             <tr key={id}>
-                <td>{name}</td>
+                <td>{name} <a href={"https://fullstackopen.com/osa7/tehtavia_blogilistan_laajennus/"}>gg</a></td>
                 <td>{user.blogs.length}</td>
             </tr>
         )

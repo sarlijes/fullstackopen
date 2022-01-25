@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import "./App.css"
 import blogService from "./services/blogService"
 import loginService from "./services/loginService"
@@ -7,6 +7,7 @@ import BlogForm from "./components/BlogForm"
 import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
 import Bloglist from "./components/Bloglist"
+import BlogDetails from "./components/BlogDetails"
 import Notification from "./components/Notification"
 import Users from "./components/Users"
 import { Button } from "./components/StyledComponents"
@@ -23,8 +24,6 @@ import {
 
 
 const App = () => {
-    const [selectedBlog, setSelectedBlog] = useState(null)
-
     const newAuthor = useField("text")
     const newTitle = useField("text")
     const newUrl = useField("text")
@@ -112,6 +111,7 @@ const App = () => {
     }
 
     const handleDeleteButtonPress = (id) => async () => {
+        console.log("🚀 ~ file: App.js ~ line 114 ~ handleDeleteButtonPress ~ id", id)
         const blogToBeDeleted = blogs.find(b => b.id === id)
         const allOtherBlogs = blogs.filter(b => b.id !== blogToBeDeleted.id)
         try {
@@ -122,13 +122,6 @@ const App = () => {
         } catch (err) {
             console.log(err)
         }
-    }
-
-    const handleSelectBlogChange = id => {
-        const blogToBeSelected = blogs.find(b => b.id === id)
-        setSelectedBlog(blogToBeSelected)
-        blogToBeSelected.showDetails = true
-        blogs.filter(b => b.id !== id).map(blog => blog.showDetails = false)
     }
 
     const handleLike = (id) => async () => {
@@ -215,13 +208,7 @@ const App = () => {
                         />
                     </Togglable>
                 </div>
-                <Bloglist blogs={blogs}
-                    handleDeleteButtonPress={handleDeleteButtonPress}
-                    selectedBlog={selectedBlog} setSelectedBlog={setSelectedBlog}
-                    handleSelectBlogChange={handleSelectBlogChange}
-                    handleLike={handleLike}
-                    user={user}
-                />
+                <Bloglist blogs={blogs} />
             </div>
         </div>
     )
@@ -241,9 +228,17 @@ const App = () => {
                         <Route path="/users">
                             <Users userList={userList} />
                         </Route>
+                        <Route path="/blogs/:id">
+                            <BlogDetails blogs={blogs}
+                                handleDeleteButtonPress={handleDeleteButtonPress}
+                                handleLike={handleLike}
+                                user={user}
+                            />
+                        </Route>
                         <Route path="/">
                             <Blogs />
                         </Route>
+
                     </Switch>
                 </Router>}
         </div>

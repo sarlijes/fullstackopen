@@ -2,6 +2,8 @@ import React from "react"
 import { render, fireEvent } from "@testing-library/react"
 import SimpleBlog from "./SimpleBlog"
 
+// TODO refactor to use SimpleBlog
+
 const blog = {
     title: "16 NetBeans Shortcut Keys for Code Editing",
     author: "Nam Ha Minh",

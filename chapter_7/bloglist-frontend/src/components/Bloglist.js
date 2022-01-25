@@ -1,16 +1,12 @@
 import React from "react"
-import Blog from "./Blog"
+import SimpleBlog from "./SimpleBlog"
 
-const Bloglist = ({ blogs, handleDeleteButtonPress, handleSelectBlogChange, handleLike, user }) => {
+const Bloglist = ({ blogs }) => {
     return (
         <>{blogs
             .map(blog =>
-                <Blog key={blog.id}
-                    blog={blog}
-                    handleDeleteButtonPress={() => handleDeleteButtonPress(blog.id)}
-                    handleSelectBlogChange={() => handleSelectBlogChange(blog.id)}
-                    handleLike={() => handleLike(blog.id)}
-                    user={user} />)}</>
+                <SimpleBlog key={blog.id}
+                    blog={blog} />)}</>
     )
 }
 export default Bloglist
