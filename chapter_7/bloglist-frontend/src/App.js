@@ -6,20 +6,12 @@ import BlogForm from "./components/BlogForm"
 import LoginForm from "./components/LoginForm"
 import Togglable from "./components/Togglable"
 import Bloglist from "./components/Bloglist"
+import Notification from "./components/Notification"
 import { useField } from "./hooks/index"
 import { addAllBlogs } from "./reducers/blogReducer"
 import { useDispatch, useSelector } from "react-redux"
 import { login, logout } from "./reducers/userReducer"
 
-const Notification = () => {
-    const notification = useSelector(state => state.notification)
-    if (notification === "") {
-        return null
-    }
-    return (
-        <div className="error">{notification}</div>
-    )
-}
 
 const App = () => {
     const [selectedBlog, setSelectedBlog] = useState(null)
@@ -163,7 +155,7 @@ const App = () => {
             </header>
             <div className="App-body">
                 <h2>Log in to application</h2>
-                <div><Notification message={"store.getState()"} /></div>
+                <div><Notification/></div>
                 <LoginForm className="loginform"
                     username={skipReset(username)}
                     password={skipReset(password)}
