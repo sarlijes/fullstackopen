@@ -14,23 +14,25 @@ const renderTableData = ( userList ) => {
 
 const renderTableHeader = () => {
     return (
-        <>
+        <tr>
             <th >{"name"}</th >
             <th >{"blogs added"}</th >
-        </>
+        </tr>
     )
 }
 
 const Users = ({ userList }) => {
     return (
-        <div className="App-body">
-            <h1 id='title'>Users</h1>
-            <table id='users'>
-                <tbody>
-                    {renderTableHeader()}
-                    {renderTableData(userList)}
-                </tbody>
-            </table>
+        <div className="App">
+            <div className="App-body">
+                <h1 id='title'>Users</h1>
+                <table id='users'>
+                    <tbody>
+                        {renderTableHeader()}
+                        {renderTableData(userList)}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

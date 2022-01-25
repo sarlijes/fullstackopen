@@ -64,7 +64,7 @@ a {
   font-family: arial, sans-serif;
 }
 
-#students {
+#users {
   text-align: center;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -72,19 +72,19 @@ a {
   width: 100%;
 }
 
-#students td, #students th {
+#users td, #users th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#students tr:nth-child(even){background-color: #f2f2f2;}
+#users tr:nth-child(even){background-color: rgba(228, 216, 216, 0.4);}
 
-#students tr:hover {background-color: #ddd;}
+#users tr:hover {background-color: #ddd;}
 
-#students th {
+#users th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;
-  background-color: #4CAF50;
-  color: white;
+  background-color: rgba(228, 216, 216, 0.4);
+  color: black;
 }
