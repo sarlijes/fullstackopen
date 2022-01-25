@@ -13,10 +13,14 @@ import { addAllBlogs } from "./reducers/blogReducer"
 import { useDispatch, useSelector } from "react-redux"
 import { login, logout } from "./reducers/userReducer"
 
+import {
+    BrowserRouter as Router,
+    Switch, Route, Link
+} from "react-router-dom"
+
 
 const App = () => {
     const [selectedBlog, setSelectedBlog] = useState(null)
-    const [page, setPage] = useState("blogs")
 
     const newAuthor = useField("text")
     const newTitle = useField("text")
@@ -173,37 +177,12 @@ const App = () => {
         return hookWithoutAnyReset
     }
 
-    const toPage = (page) => (event) => {
-        event.preventDefault()
-        setPage(page)
-    }
-
-    const Header = () => (
-        <div>
-            <header className="App-header">
-                <h1>Blog post app</h1>
-            </header>
-            <a href="" onClick={toPage("blogs")} style={padding}>blogs</a>
-            <a href="" onClick={toPage("users")} style={padding}>users</a>
-        </div>
-    )
-
-    const content = () => {
-        if (page === "blogs") {
-            return <Blogs />
-        } else if (page === "users") {
-            return <Users />
-        }
-    }
     const padding = {
         padding: 5
     }
+
     const Blogs = () => (
         <div className="App">
-
-            <Header />
-
-
             <div className="App-body">
                 <div>
                     <p>{user.name} logged in</p>
@@ -237,7 +216,26 @@ const App = () => {
 
     return (
         <div>
-            {user === null ? renderLogin() : content()}
+            {user === null ? renderLogin() :
+                <Router>
+                    <div>
+                        <Link style={padding} to="/">blogs</Link>
+                        <Link style={padding} to="/users">users</Link>
+                    </div>
+
+                    <Switch>
+                        <Route path="/users">
+                            <Users />
+                        </Route>
+                        <Route path="/">
+                            <Blogs />
+                        </Route>
+                    </Switch>
+
+                    <div>
+                        <i>Note app, Department of Computer Science 2021</i>
+                    </div>
+                </Router>}
         </div>
     )
 }
