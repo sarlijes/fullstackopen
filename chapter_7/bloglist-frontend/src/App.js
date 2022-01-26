@@ -10,6 +10,7 @@ import Bloglist from "./components/Bloglist"
 import BlogDetails from "./components/BlogDetails"
 import Notification from "./components/Notification"
 import Users from "./components/Users"
+import UserDetails from "./components/UserDetails"
 import { Button } from "./components/StyledComponents"
 import { useField } from "./hooks/index"
 import { addAllBlogs } from "./reducers/blogReducer"
@@ -228,6 +229,9 @@ const App = () => {
                     </div>
 
                     <Switch>
+                        <Route path="/users/:id">
+                            <UserDetails userList={userList} />
+                        </Route>
                         <Route path="/users">
                             <Users userList={userList} />
                         </Route>

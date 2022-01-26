@@ -1,4 +1,4 @@
-import React, { useEffect }  from "react"
+import React from "react"
 import blogService from "../services/blogService"
 import { Button, Input } from "./StyledComponents"
 import { useParams } from "react-router-dom"
@@ -6,7 +6,7 @@ import { useField } from "../hooks"
 import { addAllBlogs } from "../reducers/blogReducer"
 
 import { useDispatch } from "react-redux"
-import Comments from "./Comments"
+import TableView from "./TableView"
 
 const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
     const newComment = useField("text")
@@ -14,7 +14,6 @@ const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
     const blog = blogs.find(n => n.id === id)
 
     const dispatch = useDispatch()
-
 
     if (blog === undefined) {
         return (
@@ -59,7 +58,7 @@ const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
                 </div>
                 <Button type="submit" className="login">Submit comment</Button>
             </form>
-            <Comments arr={blog.comments} />
+            <TableView arr={blog.comments} />
         </div>
     )
 }
