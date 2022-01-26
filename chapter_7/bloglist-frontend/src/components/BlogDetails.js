@@ -6,6 +6,7 @@ import { useField } from "../hooks"
 import { addAllBlogs } from "../reducers/blogReducer"
 
 import { useDispatch } from "react-redux"
+import Comments from "./Comments"
 
 const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
     const newComment = useField("text")
@@ -21,8 +22,8 @@ const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
         )
     }
 
-    const createNewComment = () => {
-        // event.preventDefault()
+    const createNewComment = async (event) => {
+        event.preventDefault()
 
         const commentObject = {
             content: newComment.value,
@@ -32,7 +33,8 @@ const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
         blogService
             .addComment(blog.id, commentObject)
             .then(data => {
-                dispatch(addAllBlogs(blogs.concat(data)))
+                console.log("🚀 ~ file: BlogDetails.js ~ line 35 ~ createNewComment ~ data", data)
+                dispatch(addAllBlogs(blogs))
                 newComment.reset("")
             })
     }
@@ -52,10 +54,13 @@ const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
                 renderDeleteButton()
                 : <></>
             }
-            <div>
-                <Input {...newComment} />
-            </div>
-            <Button onClick={createNewComment()}>Submit comment</Button>
+            <form onSubmit={createNewComment}>
+                <div>comment
+                    <Input {...newComment} />
+                </div>
+                <Button type="submit" className="login">Submit comment</Button>
+            </form>
+            <Comments arr={blog.comments} />
         </div>
     )
 }

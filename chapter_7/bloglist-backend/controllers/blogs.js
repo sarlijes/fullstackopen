@@ -9,6 +9,7 @@ blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog
         .find({})
         .populate('user', { username: 1, name: 1 })
+        .populate('comments')
     response.json(blogs.map(blog => blog.toJSON()))
 })
 
@@ -34,18 +35,25 @@ blogsRouter.post('/:id/comments', async (request, response, next) => {
         if (body.blog === undefined) {
             return response.status(400).json({ error: 'blog missing' })
         }
-        // console.log("🚀 ~ file: blogs.js ~ blogsRouter.post ~ body.content", body.content)
-        // console.log("🚀 ~ file: blogs.js ~ blogsRouter.post ~ body.blog", body.blog)
-             
+
+        const decodedToken = jwt.verify(request.token, process.env.SECRET)
+        if (!request.token || !decodedToken.id) {
+            return response.status(401).json({ error: 'token missing or invalid' })
+        }
+
+        const blog = await Blog.findById(request.params.id)
+
         const comment = new Comment({
             content: body.content,
             date: new Date(),
-            blog: body.blog._id
+            blog: blog._id
         })
 
-        const savedBlog = await comment.save()
+        const savedComment = await comment.save()
+        blog.comments = blog.comments.concat(savedComment._id)
+        await blog.save()
 
-        response.json(savedBlog)
+        response.json(blog.toJSON)
     } catch (exception) {
         next(exception)
     }

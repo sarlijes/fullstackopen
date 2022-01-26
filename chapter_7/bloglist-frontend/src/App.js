@@ -63,9 +63,11 @@ const App = () => {
             })
     }, [dispatch])
 
-    const blogs = useSelector(state =>
-        state.blogs.sort((a, b) =>
-            a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1))
+    const blogs = useSelector(function (state) {
+        // console.log("🚀 ~ file: App.js ~ line 67 ~ blogs ~ state", state)
+        // return state.blogs.sort((a, b) => a.title.toLowerCase() > b.title.toLowerCase() ? 1 : -1)
+        return state.blogs
+    })
 
     const user = useSelector(state => state.loggedInUser)
 
