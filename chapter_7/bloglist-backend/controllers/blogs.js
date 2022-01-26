@@ -116,7 +116,9 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 
 blogsRouter.put('/:id', async (request, response, next) => {
     try {
-        const blog = await Blog.findById(request.params.id)
+        const blog = await Blog
+            .findById(request.params.id)
+            .populate('comments')
         blog.likes = Number(blog.likes) + 1
 
         Blog.findByIdAndUpdate(request.params.id, blog, { new: true })

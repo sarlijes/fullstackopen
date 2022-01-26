@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect }  from "react"
 import blogService from "../services/blogService"
 import { Button, Input } from "./StyledComponents"
 import { useParams } from "react-router-dom"
@@ -15,6 +15,7 @@ const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
 
     const dispatch = useDispatch()
 
+
     if (blog === undefined) {
         return (
             <div className="App"></div>
@@ -29,14 +30,12 @@ const BlogDetails = ({ blogs, handleDeleteButtonPress, handleLike, user }) => {
             content: newComment.value,
             blog: blog
         }
-        //changeNotification("Commented")
-        blogService
+        await blogService
             .addComment(blog.id, commentObject)
-            .then(data => {
-                console.log("🚀 ~ file: BlogDetails.js ~ line 35 ~ createNewComment ~ data", data)
-                dispatch(addAllBlogs(blogs))
-                newComment.reset("")
-            })
+
+        const updatedBlogs = await blogService.getAll()
+        dispatch(addAllBlogs(updatedBlogs))
+        newComment.reset("")
     }
 
     const renderDeleteButton = () => (

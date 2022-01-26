@@ -127,16 +127,16 @@ const App = () => {
 
     const handleLike = (id) => async () => {
         const blogToBeLiked = blogs.find(b => b.id === id)
-        const allOtherBlogs = blogs.filter(b => b.id !== blogToBeLiked.id)
         try {
-            const updatedBlog = await blogService.update(blogToBeLiked.id, {
+            await blogService.update(blogToBeLiked.id, {
                 author: blogToBeLiked.author,
                 title: blogToBeLiked.title,
                 likes: blogToBeLiked.likes + 1,
                 url: blogToBeLiked.url,
                 user: blogToBeLiked.user._id
             })
-            dispatch(addAllBlogs(allOtherBlogs.concat(updatedBlog)))
+            const updatedBlogs = await blogService.getAll()
+            dispatch(addAllBlogs(updatedBlogs))
             changeNotification(`You have liked ${blogToBeLiked.title}`)
         } catch (err) {
             console.log(err)
