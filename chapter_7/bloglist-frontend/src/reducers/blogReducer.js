@@ -15,6 +15,13 @@ export const addBlog = blog => {
     }
 }
 
+// export const addComment = comment => {
+//     return {
+//         type: "ADD_COMMENT",
+//         comment: comment,
+//     }
+// }
+
 export const addAllBlogs = blogList => {
     return {
         type: "ADD_ALL",

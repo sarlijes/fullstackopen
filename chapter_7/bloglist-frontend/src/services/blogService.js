@@ -33,10 +33,17 @@ const update = async (id, newObject) => {
     return response.data
 }
 
+const addComment = async (id, newObject) => {
+    console.log("🚀 ~ file: blogService.js ~ line 37 ~ addComment ~ newObject", newObject)
+    const request = axios.post(`${baseUrl}/${id}/comments`, newObject, auth)
+    const response = await request
+    return response.data
+}
+
 const deleteBlog = async (id) => {
     const request = axios.delete(`${baseUrl}/${id}`, auth)
     const response = await request
     return response.data
 }
 
-export default { getAll, create, update, setToken, removeToken, deleteBlog, token }
+export default { getAll, create, update, setToken, removeToken, deleteBlog, token, addComment }

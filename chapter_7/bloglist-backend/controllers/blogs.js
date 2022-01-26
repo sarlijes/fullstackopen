@@ -1,6 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const Comment = require('../models/comment')
 const jwt = require('jsonwebtoken')
 
 
@@ -33,9 +34,13 @@ blogsRouter.post('/:id/comments', async (request, response, next) => {
         if (body.blog === undefined) {
             return response.status(400).json({ error: 'blog missing' })
         }
+        // console.log("🚀 ~ file: blogs.js ~ blogsRouter.post ~ body.content", body.content)
+        // console.log("🚀 ~ file: blogs.js ~ blogsRouter.post ~ body.blog", body.blog)
+             
         const comment = new Comment({
             content: body.content,
-            blog: body.blog
+            date: new Date(),
+            blog: body.blog._id
         })
 
         const savedBlog = await comment.save()

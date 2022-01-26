@@ -32,7 +32,7 @@ const App = () => {
     const password = useField("password")
 
     const dispatch = useDispatch()
-
+    // TODO implement notification in BlogDetails
     const changeNotification = (message) => {
         dispatch({
             type: "NEW_NOTIFICATION",
@@ -111,7 +111,6 @@ const App = () => {
     }
 
     const handleDeleteButtonPress = (id) => async () => {
-        console.log("🚀 ~ file: App.js ~ line 114 ~ handleDeleteButtonPress ~ id", id)
         const blogToBeDeleted = blogs.find(b => b.id === id)
         const allOtherBlogs = blogs.filter(b => b.id !== blogToBeDeleted.id)
         try {
@@ -160,6 +159,8 @@ const App = () => {
                 newUrl.reset("")
             })
     }
+
+
 
     const renderLogin = () => (
         <div className="App">
