@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { gql, useQuery, useMutation } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 
 const CREATE_BOOK = gql`
   mutation createBook($title: String!, $author: String!,
