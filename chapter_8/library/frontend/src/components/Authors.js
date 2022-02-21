@@ -1,6 +1,7 @@
 import { gql, useQuery } from '@apollo/client'
+import EditAuthor from './EditAuthor'
 
-const ALL_AUTHORS = gql`
+export const ALL_AUTHORS = gql`
   query {
     allAuthors {
     name
@@ -27,6 +28,7 @@ const Authors = (props) => {
   return (
     <div>
       <h2>authors</h2>
+
       <table>
         <tbody>
           <tr>
@@ -43,6 +45,8 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
+      <h2>Edit author</h2>
+      <EditAuthor show={true} />
     </div>
   )
 }
