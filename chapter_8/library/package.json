@@ -4,8 +4,13 @@
   "description": "Exercises for Full Stack Open 8.1.->",
   "main": "index.js",
   "scripts": {
+    "start": "node library-backend.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.6.3",
+    "graphql": "^16.3.0"
+  }
 }
