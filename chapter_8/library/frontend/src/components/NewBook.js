@@ -1,11 +1,31 @@
 import { useState } from 'react'
+import { gql, useQuery, useMutation } from '@apollo/client'
+
+const CREATE_BOOK = gql`
+  mutation createBook($title: String!, $author: String!,
+    $published: Int!, $genres: [String]!) {
+    addBook(
+      title: $title,
+      author: $author,
+      published: $published,
+      genres: $genres
+    ) {
+      title
+      author
+      published
+      genres
+    }
+  }
+`
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
-  const [published, setPublished] = useState('')
+  const [publishedYear, setPublishedYear] = useState('')
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
+
+  const [createBook] = useMutation(CREATE_BOOK)
 
   if (!props.show) {
     return null
@@ -16,8 +36,12 @@ const NewBook = (props) => {
 
     console.log('add book...')
 
+    const published = parseInt(publishedYear)
+
+    createBook({ variables: { title, author, published, genres } })
+
     setTitle('')
-    setPublished('')
+    setPublishedYear('')
     setAuthor('')
     setGenres([])
     setGenre('')
@@ -49,8 +73,8 @@ const NewBook = (props) => {
           published
           <input
             type="number"
-            value={published}
-            onChange={({ target }) => setPublished(target.value)}
+            value={publishedYear}
+            onChange={({ target }) => setPublishedYear(target.value)}
           />
         </div>
         <div>
