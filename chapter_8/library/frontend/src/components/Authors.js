@@ -25,6 +25,9 @@ const Authors = (props) => {
 
   const authors = result.data.allAuthors
 
+  const names = []
+  authors.forEach((a) => (names.push({ value: a.name, label: a.name })));
+
   return (
     <div>
       <h2>authors</h2>
@@ -46,7 +49,7 @@ const Authors = (props) => {
         </tbody>
       </table>
       <h2>Edit author</h2>
-      <EditAuthor show={true} />
+      <EditAuthor show={true} options={names} />
     </div>
   )
 }

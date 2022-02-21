@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { ALL_AUTHORS } from './Authors'
+import Select from 'react-select';
 
 const EDIT_AUTHOR = gql`
   mutation editAuthor($name: String!, $setBornTo: Int!) {
@@ -15,8 +16,8 @@ const EDIT_AUTHOR = gql`
 `
 
 const EditAuthor = (props) => {
-  const [name, setName] = useState('')
   const [bornYear, setBornYear] = useState('')
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const [editAuthor] = useMutation(EDIT_AUTHOR, {
     refetchQueries: [{ query: ALL_AUTHORS }]
@@ -25,26 +26,25 @@ const EditAuthor = (props) => {
   if (!props.show) {
     return null
   }
-
   const submit = async (event) => {
     event.preventDefault()
     console.log('edit author...')
 
     const born = parseInt(bornYear)
-    editAuthor({ variables: { name: name, setBornTo: born } })
+    editAuthor({ variables: { name: selectedOption.value, setBornTo: born } })
 
-    setName('')
+    setSelectedOption(null)
     setBornYear('')
   }
 
   return (
     <div>
       <form onSubmit={submit}>
-        <div>
-          name
-          <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
+        <div className="App">
+          <Select
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={props.options}
           />
         </div>
         <div>
