@@ -14,8 +14,8 @@ export const ALL_BOOKS_OLD = gql`
   }
 `
 export const ALL_BOOKS = gql`
-  query findBooksByGenre($genreToSearch: String) {
-    allBooks(genre: $genreToSearch) {
+  query findBooksByGenre($selectedGenre: String) {
+    allBooks(genre: $selectedGenre) {
       title
       author {
         name
@@ -28,7 +28,15 @@ export const ALL_BOOKS = gql`
 
 const Books = (props) => {
   const [selectedGenre, setSelectedGenre] = useState(null)
-  const result = useQuery(ALL_BOOKS)
+  console.log("🚀 ~ file: Books.js ~ line 31 ~ Books ~ selectedGenre", selectedGenre)
+
+  const result = useQuery(ALL_BOOKS, {
+    variables: { selectedGenre }
+  })
+
+  // console.log("🚀 ~ file: Books.js ~ line 36 ~ Books ~ result", result.data.allBooks)
+
+  // const result = useQuery(ALL_BOOKS)
 
   if (!props.show) {
     return null
