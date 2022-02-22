@@ -26,7 +26,7 @@ const ME = gql`
 const Recommendations = (props) => {
 
   const currentUser = useQuery(ME)
-  const [selectedGenre, setSelecterGenre] = useState("js")
+  const [selectedGenre, setSelectedGenre] = useState("js")
 
   const resultByGenre = useQuery(ALL_BOOKS, {
     variables: { selectedGenre }
