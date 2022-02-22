@@ -116,16 +116,22 @@ const resolvers = {
         })
         .catch((error) => console.log(error));
     },
-    editAuthor: (root, args) => {
+    editAuthor: async (root, args) => {
 
-      return null // TODO
-      // const author = authors.find(a => a.name === args.name)
+      let author = await Author.findOne({ name: args.name })
 
-      // if (author === undefined) {
-      //   return null;
-      // }
-      // author.born = args.setBornTo;
-      // return author
+      if (author === undefined || author === null) {
+        return null;
+      }
+      author.born = args.setBornTo;
+
+      author.save()
+        .then((savedItem) => {
+          return savedItem;
+        })
+        .catch((error) => console.log(error));
+
+      return author
     }
   }
 }
