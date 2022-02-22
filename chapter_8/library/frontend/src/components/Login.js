@@ -13,7 +13,6 @@ const CREATE_LOGIN = gql`
     }
   }
 `
-
 const Login = ({ show, setToken, setError }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -24,7 +23,6 @@ const Login = ({ show, setToken, setError }) => {
       setError(error.graphQLErrors[0].message)
     }
   })
-
   useEffect(() => {
     if (result.data) {
       const token = result.data.login.value
@@ -40,7 +38,6 @@ const Login = ({ show, setToken, setError }) => {
   const submit = async (event) => {
     event.preventDefault()
     login({ variables: { username, password } })
-
     setUsername('')
     setPassword('')
   }

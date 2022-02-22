@@ -14,7 +14,6 @@ const EDIT_AUTHOR = gql`
     }
   }
 `
-
 const EditAuthor = (props) => {
   const [bornYear, setBornYear] = useState('')
   const [selectedOption, setSelectedOption] = useState(null);
@@ -22,7 +21,6 @@ const EditAuthor = (props) => {
   const [editAuthor] = useMutation(EDIT_AUTHOR, {
     refetchQueries: [{ query: ALL_AUTHORS }]
   })
-
   if (!props.show) {
     return null
   }

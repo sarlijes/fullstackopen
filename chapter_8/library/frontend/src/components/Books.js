@@ -11,8 +11,6 @@ export const ALL_BOOKS = gql`
     }
   }
 `
-
-
 const Books = (props) => {
 
   const result = useQuery(ALL_BOOKS)
@@ -20,11 +18,9 @@ const Books = (props) => {
   if (!props.show) {
     return null
   }
-
   if (result.loading) {
     return <div>loading...</div>
   }
-
   const books = result.data.allBooks
 
   return (
