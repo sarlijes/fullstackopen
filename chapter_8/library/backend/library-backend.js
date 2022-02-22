@@ -210,8 +210,6 @@ const resolvers = {
         id: user._id,
       }
       const result = { value: jwt.sign(userForToken, JWT_SECRET) }
-      console.log("🚀 ~ file: library-backend.js ~ line 212 ~ login: ~ result", result)
-
       return result
     },
   }
