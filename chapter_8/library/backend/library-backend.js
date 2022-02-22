@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const { ApolloServer, gql } = require('apollo-server')
 const { v1: uuid } = require('uuid')
 const mongoose = require('mongoose')
@@ -5,11 +7,11 @@ const mongoose = require('mongoose')
 const Book = require('./models/book')
 const Author = require('./models/author')
 
-const MONGODB_URI = 'mongodb+srv://user123:123@cluster0.prolt.mongodb.net/library?retryWrites=true&w=majority'
+const uri = process.env.MONGODB_URI;
 
-console.log('connecting to', MONGODB_URI)
+console.log('connecting to', uri)
 
-mongoose.connect(MONGODB_URI)
+mongoose.connect(uri)
   .then(() => {
     console.log('connected to MongoDB')
   })
