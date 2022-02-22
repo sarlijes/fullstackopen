@@ -28,27 +28,24 @@ export const ALL_BOOKS = gql`
 
 const Books = (props) => {
   const [selectedGenre, setSelectedGenre] = useState(null)
-  console.log("🚀 ~ file: Books.js ~ line 31 ~ Books ~ selectedGenre", selectedGenre)
 
-  const result = useQuery(ALL_BOOKS, {
+  const resultByGenre = useQuery(ALL_BOOKS, {
     variables: { selectedGenre }
   })
-
-  // console.log("🚀 ~ file: Books.js ~ line 36 ~ Books ~ result", result.data.allBooks)
-
-  // const result = useQuery(ALL_BOOKS)
+  const resultAllBooks = useQuery(ALL_BOOKS);
 
   if (!props.show) {
     return null
   }
-  if (result.loading) {
+  if (resultByGenre.loading || resultAllBooks.loading) {
     return <div>loading...</div>
   }
-  const books = result.data.allBooks
+  const booksbyGenre = resultByGenre.data.allBooks
+  const allBooks = resultAllBooks.data.allBooks
 
   let genreOptions = new Set();
 
-  books.forEach((a) => a.genres.forEach(genreOptions.add, genreOptions));
+  allBooks.forEach((a) => a.genres.forEach(genreOptions.add, genreOptions));
   genreOptions = Array.from(genreOptions)
 
   return (
@@ -61,12 +58,14 @@ const Books = (props) => {
             <th></th>
             <th>author</th>
             <th>published</th>
+            <th>genres</th>
           </tr>
-          {books.map((a) => (
+          {booksbyGenre.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
               <td>{a.published}</td>
+              <td>{a.genres.join(", ")}</td>
             </tr>
           ))}
         </tbody>
