@@ -77,6 +77,7 @@ const typeDefs = gql`
   type Mutation {
     createUser(
       username: String!
+      favoriteGenre: String!
     ): User
     login(
       username: String!
@@ -107,9 +108,9 @@ const resolvers = {
       return books.filter(byAuthor)
     },
     allAuthors: async () => Author.find({}),
-    me: (root, args, context) => {
-      return context.currentUser
-    }
+    me: async (root, args, context) => {
+      return await context.currentUser
+    },
   },
   Author: {
     bookCount: async (root) => {

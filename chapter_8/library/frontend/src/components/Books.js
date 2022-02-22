@@ -1,18 +1,6 @@
 import { useState } from 'react'
 import { gql, useQuery } from '@apollo/client'
 
-export const ALL_BOOKS_OLD = gql`
-  query {
-    allBooks {
-      title
-      author {
-        name
-      }
-      published
-      genres
-    }
-  }
-`
 export const ALL_BOOKS = gql`
   query findBooksByGenre($selectedGenre: String) {
     allBooks(genre: $selectedGenre) {

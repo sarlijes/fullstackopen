@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { ALL_AUTHORS } from './Authors'
-import { ALL_BOOKS } from './Books'
 
 const CREATE_LOGIN = gql`
   mutation createLogin($username: String!, $password: String!) {
