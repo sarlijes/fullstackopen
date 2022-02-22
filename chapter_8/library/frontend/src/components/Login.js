@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import { ALL_AUTHORS } from './Authors'
+import { ALL_BOOKS } from './Books'
 
 const CREATE_LOGIN = gql`
   mutation createLogin($username: String!, $password: String!) {
@@ -28,8 +29,7 @@ const Login = ({ show, setToken, setError }) => {
     if (result.data) {
       const token = result.data.login.value
       setToken(token)
-      localStorage.setItem('librarys-user-token', token)
-
+      localStorage.setItem('library-user-token', token)
     }
   }, [result.data, setToken])
 
