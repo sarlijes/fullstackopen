@@ -98,6 +98,7 @@ const resolvers = {
       let book;
 
       if (!author) {
+        // No existing author, create new author
         author = new Author({
           name: args.author,
           id: uuid(),
