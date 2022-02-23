@@ -5,7 +5,6 @@ interface ExerciseCalculatorValues {
 
 const parseArguments = (args: Array<string>): ExerciseCalculatorValues => {
   if (args.length < 10) throw new Error('Not enough arguments');
-  console.log("🚀 ~ file: exerciseCalculator.ts ~ line 8 ~ parseArguments ~ args.length ", args.length)
   if (args.length > 10) throw new Error('Too many arguments');
 
   let trainingData = [];
@@ -25,9 +24,44 @@ const parseArguments = (args: Array<string>): ExerciseCalculatorValues => {
 }
 
 const exerciseCalculator = (trainingData: number[], target: number) => {
-  console.log("🚀 ~ file: exerciseCalculator.ts ~ line 28 ~ exerciseCalculator ~ target", target)
-  console.log("🚀 ~ file: exerciseCalculator.ts ~ line 28 ~ exerciseCalculator ~ arr", trainingData)
-  console.log("success")
+
+  function getSum(total: number, num: number,) {
+    return total + num;
+  }
+  const sum = trainingData.reduce(getSum, 0);
+  const average = sum / trainingData.length;
+
+  const result = {
+    periodLength: -1,
+    success: false,
+    rating: -1,
+    ratingDescription: "",
+    target: -1,
+    average: -1.0
+  }
+
+  const ratings = new Map();
+
+  ratings.set(1, "Nearly there!");
+  ratings.set(2, "Good joob");
+  ratings.set(3, "Take it easy!");
+
+  result.periodLength = trainingData.length;
+  result.success = average >= target;
+
+  if (average < target - 1) {
+    result.rating = 1
+  } else if (average > target + 1) {
+    result.rating = 3
+  } else {
+    result.rating = 2
+  }
+
+  result.ratingDescription = ratings.get(result.rating);
+  result.target = target;
+  result.average = average;
+
+  console.log(result)
 }
 
 try {
@@ -41,10 +75,3 @@ try {
   console.log(errorMessage);
 }
 
-// { periodLength: 7,
-//   trainingDays: 5,
-//   success: false,
-//   rating: 2,
-//   ratingDescription: 'not too bad but could be better',
-//   target: 2,
-//   average: 1.9285714285714286 }
