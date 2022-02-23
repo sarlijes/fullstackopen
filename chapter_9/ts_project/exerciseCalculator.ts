@@ -5,8 +5,6 @@ interface ExerciseCalculatorValues {
 
 const parseArguments = (args: Array<string>): ExerciseCalculatorValues => {
   if (args.length < 12) throw new Error('Not enough arguments');
-  console.log("🚀 ~ file: exerciseCalculator.ts ~ line 8 ~ parseArguments ~ args", args)
-  console.log("🚀 ~ file: exerciseCalculator.ts ~ line 8 ~ parseArguments ~ args.length", args.length)
   if (args.length > 12) throw new Error('Too many arguments');
 
   let trainingData = [];
@@ -16,8 +14,6 @@ const parseArguments = (args: Array<string>): ExerciseCalculatorValues => {
     trainingData.push(Number(trimmed))
   }
   const target = Number(args[2]);
-  console.log("🚀 ~ file: exerciseCalculator.ts ~ line 19 ~ parseArguments ~ target", target)
-
   if (isNaN(target)) throw new Error('Must give target as number');
 
   return {
