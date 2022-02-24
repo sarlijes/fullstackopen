@@ -3,20 +3,29 @@ import { calculateBmi } from './bmiCalculator';
 const app = express();
 
 app.get('/hello', (_req, res) => {
-  res.send("Hello Full Stack!")
+  res.send("Hello Full Stack!");
 });
 
 app.get('/bmi', (req, res) => {
 
-  const height = Number(req.query.height);
-  const weight = Number(req.query.weight);
-  const description = calculateBmi(height, weight);
+  try {
+    const height = Number(req.query.height);
+    const weight = Number(req.query.weight);
+    const description = calculateBmi(height, weight);
 
-  res.send({
-    weight: height,
-    height: weight,
-    bmi: description
-  });
+    res.send({
+      weight: height,
+      height: weight,
+      bmi: description
+    });
+  } catch {
+    res.status(404);
+    res.send({
+      error: "malformatted parameters"
+    });
+  }
+
+
 });
 
 const PORT = 3002;
