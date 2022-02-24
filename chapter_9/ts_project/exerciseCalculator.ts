@@ -22,7 +22,7 @@ const parseArguments = (args: Array<string>): ExerciseCalculatorValues => {
   };
 };
 
-const exerciseCalculator = (trainingData: number[], target: number) => {
+export const exerciseCalculator = (trainingData: number[], target: number) => {
 
   function getSum(total: number, num: number,) {
     return total + num;
@@ -57,7 +57,7 @@ const exerciseCalculator = (trainingData: number[], target: number) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   result.ratingDescription = ratings.get(result.rating);
 
-  console.log(result);
+  return result;
 };
 
 try {
