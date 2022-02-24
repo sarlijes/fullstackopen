@@ -54,6 +54,7 @@ const exerciseCalculator = (trainingData: number[], target: number) => {
   } else {
     result.rating = 2;
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   result.ratingDescription = ratings.get(result.rating);
 
   console.log(result);
