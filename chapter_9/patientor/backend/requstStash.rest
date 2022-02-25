@@ -1,6 +1,7 @@
 GET http://localhost:3001/api/ping
+###
 
-# GET http://localhost:3001/api/ping
+GET http://localhost:3001/api/diagnoses
 ###
 
 # POST http://localhost:3001/exercises HTTP/1.1
