@@ -1,5 +1,7 @@
 import patientData from '../../data/patients';
-import { Patient } from '../types';
+import { Patient, NewPatient } from '../types';
+
+import { v1 as uuid } from 'uuid';
 
 const patients: Array<Patient> = patientData;
 
@@ -19,8 +21,13 @@ const listNonSensitive = (): Omit<Patient, "ssn">[] => {
     }));
 };
 
-const addPatient = () => {
-  return "not implemented";
+const addPatient = (entry: NewPatient): Patient => {
+  const newDiaryEntry = {
+    id: uuid(),
+    ...entry
+  };
+  patients.push(newDiaryEntry);
+  return newDiaryEntry;
 };
 
 export default {
