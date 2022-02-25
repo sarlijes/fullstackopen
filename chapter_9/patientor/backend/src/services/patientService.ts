@@ -9,15 +9,26 @@ const list = (): Array<Patient> => {
   return patients;
 };
 
+const findById = (id: string): Patient | undefined => {
+  const patient = patients.find(x => x.id === id);
+  return patient;
+};
+
+// const findById = (id: number): DiaryEntry | undefined => {
+//   const entry = diaries.find(d => d.id === id);
+//   return entry;
+// };
+
 const listNonSensitive = (): Omit<Patient, "ssn">[] => {
   const patients: Patient[] = list();
   return patients
-    .map(({ id, name, dateOfBirth, gender, occupation }) => ({
+    .map(({ id, name, dateOfBirth, gender, occupation, entries }) => ({
       id,
       name,
       dateOfBirth,
       gender,
       occupation,
+      entries
     }));
 };
 
@@ -34,5 +45,6 @@ const addPatient = (entry: Omit<NewPatient, "id">): Patient => {
 export default {
   getEntries: list,
   addPatient: addPatient,
-  getNonSensitiveEntries: listNonSensitive
+  getNonSensitiveEntries: listNonSensitive,
+  findById
 };
