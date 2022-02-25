@@ -1,4 +1,40 @@
 import React from 'react';
+import { parseJsonText } from 'typescript';
+
+interface HeaderProps {
+  name: string;
+}
+
+const Header = (props: HeaderProps) => {
+  return <h1>{props.name}</h1>;
+};
+
+interface ContentProps {
+  name: string;
+  exerciseCount: number;
+}
+
+const Content = (props: ContentProps) => {
+  return (
+    <p>
+      {props.name} {props.exerciseCount}
+    </p>
+  );
+}
+
+interface TotalProps {
+  courseParts: ContentProps[];
+}
+
+const Total = (props: TotalProps) => {
+  return (
+    <p key={"nummberOfExercises"}>
+      Number of exercises{" "}
+      {props.courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
+    </p>
+  );
+}
+
 const App = () => {
   const courseName = "Half Stack application development";
   const courseParts = [
@@ -18,20 +54,16 @@ const App = () => {
 
   return (
     <div>
-      <h1>{courseName}</h1>
-      <p>
-        {courseParts[0].name} {courseParts[0].exerciseCount}
-      </p>
-      <p>
-        {courseParts[1].name} {courseParts[1].exerciseCount}
-      </p>
-      <p>
-        {courseParts[2].name} {courseParts[2].exerciseCount}
-      </p>
-      <p>
-        Number of exercises{" "}
-        {courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
-      </p>
+      <Header key={courseName} name={courseName} />
+      {courseParts.map((part) => {
+        return <Content
+          key={part.name}
+          name={part.name}
+          exerciseCount={part.exerciseCount}
+        />
+      })}
+      <Total key={courseName} courseParts={courseParts} />
+
     </div>
   );
 };
