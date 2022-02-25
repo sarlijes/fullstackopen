@@ -9,15 +9,17 @@ interface Props {
 }
 
 const ViewDetailsModal = ({ modalOpen, onClose, patient }: Props) => (
-  <Modal open={modalOpen} onClose={onClose} centered={false} closeIcon>
+
+  < Modal open={modalOpen} onClose={onClose} centered={false} closeIcon>
     <Modal.Header>Patient details</Modal.Header>
     <Modal.Content>
+      {console.log("🚀 ~ file: DetailsModal.tsx ~ line 12 ~ patient", patient)}
       <h1>{patient.name}</h1>
       <h2>{patient.occupation}</h2>
       <div>SSN: {patient.ssn}</div>
       <div>{patient.gender}</div>
     </Modal.Content>
-  </Modal>
+  </Modal >
 );
 
 export default ViewDetailsModal;
