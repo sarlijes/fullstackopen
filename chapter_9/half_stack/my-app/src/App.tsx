@@ -44,9 +44,12 @@ const App = () => {
     type: string;
   }
 
+  interface CourseWithDescription extends CoursePartBase {
+    description: string;
+  }
+
   interface CourseNormalPart extends CoursePartBase {
     type: "normal";
-    description: string;
   }
   interface CourseProjectPart extends CoursePartBase {
     type: "groupProject";
@@ -55,11 +58,11 @@ const App = () => {
 
   interface CourseSubmissionPart extends CoursePartBase {
     type: "submission";
-    description: string;
     exerciseSubmissionLink: string;
   }
 
-  type CoursePart = CourseNormalPart | CourseProjectPart | CourseSubmissionPart;
+  type CoursePart = CourseNormalPart | CourseProjectPart |
+    CourseSubmissionPart | CourseWithDescription;
 
   // this is the new coursePart variable
   const courseParts: CoursePart[] = [
