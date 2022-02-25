@@ -9,12 +9,12 @@ const Header = (props: HeaderProps) => {
   return <h1>{props.name}</h1>;
 };
 
-interface ContentProps {
+interface PartProps {
   name: string;
   exerciseCount: number;
 }
 
-const Content = (props: ContentProps) => {
+const Part = (props: PartProps) => {
   return (
     <p>
       {props.name} {props.exerciseCount}
@@ -23,7 +23,7 @@ const Content = (props: ContentProps) => {
 }
 
 interface TotalProps {
-  courseParts: ContentProps[];
+  courseParts: PartProps[];
 }
 
 const Total = (props: TotalProps) => {
@@ -97,7 +97,7 @@ const App = () => {
     <div>
       <Header key={courseName} name={courseName} />
       {courseParts.map((part) => {
-        return <Content
+        return <Part
           key={part.name}
           name={part.name}
           exerciseCount={part.exerciseCount}
