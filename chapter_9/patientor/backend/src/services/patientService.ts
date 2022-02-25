@@ -21,7 +21,8 @@ const listNonSensitive = (): Omit<Patient, "ssn">[] => {
     }));
 };
 
-const addPatient = (entry: NewPatient): Patient => {
+const addPatient = (entry: Omit<NewPatient, "id">): Patient => {
+  // const addPatient = (entry: NewPatient): Patient => {
   const newDiaryEntry = {
     id: uuid(),
     ...entry
