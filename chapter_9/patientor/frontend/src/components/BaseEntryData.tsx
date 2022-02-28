@@ -12,8 +12,8 @@ const BaseEntryData = ({ entry }: EntryProps) => {
   const [{ diagnoses }] = useStateValue();
   return (
     <>
-      <Card.Header>{entry.date}</Card.Header>
-      <Card.Meta>{entry.specialist}</Card.Meta>
+      <Card.Content>{entry.date}</Card.Content>
+      <Card.Content><strong>Specialist: </strong>{entry.specialist}</Card.Content>
       <Card.Content><strong>Description: </strong>
         {entry.description}</Card.Content>
       <Card.Content><strong>Diagnoses: </strong>
