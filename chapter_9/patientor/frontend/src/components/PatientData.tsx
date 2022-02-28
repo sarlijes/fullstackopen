@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Card } from 'semantic-ui-react';
 
 import { Patient, Entry } from '../types';
 import { apiBaseUrl } from '../constants';
@@ -47,11 +48,13 @@ export const PatientDetails: React.FC = () => {
       <div>SSN: {selectedPatient.ssn}</div>
       <div>{selectedPatient.gender}</div>
       <h2>Entries</h2>
+      <Card.Group>
+        {entries.map((e: Entry) => (
+          <EntryDetails key={e.id} entry={e} />
+        ))}
+      </Card.Group>
 
-      {entries.map((e: Entry) => (
-        <EntryDetails key={e.id} entry={e} />
 
-      ))}
       <Link to={`/}`}>back</Link>
     </div >
   );
