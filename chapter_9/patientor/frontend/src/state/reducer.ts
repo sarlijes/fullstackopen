@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { State } from "./state";
-import { Patient } from "../types";
+import { Diagnosis, Patient } from "../types";
 
 export type Action =
   | {
@@ -15,6 +15,10 @@ export type Action =
   | {
     type: "GET_PATIENT";
     payload: Patient;
+  }
+  | {
+    type: "SET_DIAGNOSIS_LIST";
+    payload: Diagnosis[];
   }
   ;
 
@@ -30,6 +34,10 @@ export const getPatient = (patientData: Patient): Action => {
   return { type: 'GET_PATIENT', payload: patientData };
 };
 
+export const setDiagnosisList = (fetchedList: Diagnosis[]): Action => {
+  return { type: 'SET_DIAGNOSIS_LIST', payload: fetchedList };
+};
+
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "SET_PATIENT_LIST":
@@ -41,6 +49,17 @@ export const reducer = (state: State, action: Action): State => {
             {}
           ),
           ...state.patients
+        }
+      };
+    case "SET_DIAGNOSIS_LIST":
+      return {
+        ...state,
+        diagnoses: {
+          ...action.payload.reduce(
+            (memo, diagnosis) => ({ ...memo, [diagnosis.code]: diagnosis }),
+            {}
+          ),
+          ...state.diagnoses
         }
       };
     case "ADD_PATIENT":
