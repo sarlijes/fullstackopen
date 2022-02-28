@@ -10,7 +10,7 @@ import { useStateValue, getPatient } from '../state';
 
 export const PatientDetails: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const [{ patients }, dispatch] = useStateValue();
+  const [{ patients, diagnoses }, dispatch] = useStateValue();
   const [selectedPatient, setSelectedPatient] = useState<Patient | undefined>();
   const { id: id } = useParams<{ id: string }>();
 
@@ -39,7 +39,6 @@ export const PatientDetails: React.FC = () => {
   }
 
   const entries = selectedPatient.entries;
-  console.log("🚀 ~ file: PatientData.tsx ~ line 42 ~ entries", entries);
 
   return (
     <div>
@@ -59,17 +58,22 @@ export const PatientDetails: React.FC = () => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
+          {console.log(entries)}
           {entries.map((e: Entry) => (
             <Table.Row key={e.id}>
               <Table.Cell>{e.date}</Table.Cell>
               <Table.Cell>{e.description}</Table.Cell>
-              <Table.Cell>{e.diagnosisCodes?.join(", ")}</Table.Cell>
+              <Table.Cell>{e.diagnosisCodes?.map((code) =>
+              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+              (diagnoses[code] !== undefined ? `${code} (${diagnoses[code].name})`
+                : "")).join(", \n")}
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
       </Table>
       <Link to={`/}`}>back</Link>
-    </div>
+    </div >
   );
 };
 
