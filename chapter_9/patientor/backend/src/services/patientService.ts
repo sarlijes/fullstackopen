@@ -14,11 +14,6 @@ const findById = (id: string): Patient | undefined => {
   return patient;
 };
 
-// const findById = (id: number): DiaryEntry | undefined => {
-//   const entry = diaries.find(d => d.id === id);
-//   return entry;
-// };
-
 const listNonSensitive = (): Omit<Patient, "ssn">[] => {
   const patients: Patient[] = list();
   return patients
@@ -33,7 +28,6 @@ const listNonSensitive = (): Omit<Patient, "ssn">[] => {
 };
 
 const addPatient = (entry: Omit<NewPatient, "id">): Patient => {
-  // const addPatient = (entry: NewPatient): Patient => {
   const newDiaryEntry = {
     id: uuid(),
     ...entry
