@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 import { Patient } from '../types';
 import { apiBaseUrl } from '../constants';
-import { useStateValue } from '../state';
+import { useStateValue, updatePatient } from '../state';
 
 export const PatientDetails: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const [{ patients: patientList }, dispatch] = useStateValue();
+  const [{ patients }, dispatch] = useStateValue();
   const [selectedPatient, setSelectedPatient] = useState<Patient | undefined>();
   const { id: id } = useParams<{ id: string }>();
 
@@ -20,13 +20,17 @@ export const PatientDetails: React.FC = () => {
         );
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         dispatch({ type: 'GET_PATIENT', payload: patientData });
+        // dispatch(getPatient(patientData));
+        // dispatch(getPatient(patientData));'
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        dispatch(updatePatient(patientData));
         setSelectedPatient(patientData);
       } catch (error) {
         console.log(error);
       }
     };
-    if (patientList[id] && patientList[id].ssn) {
-      setSelectedPatient(patientList[id]);
+    if (patients[id] && patients[id].ssn) {
+      setSelectedPatient(patients[id]);
     } else {
       void getPatient();
     }

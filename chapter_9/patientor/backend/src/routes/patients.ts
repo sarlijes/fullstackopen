@@ -24,7 +24,7 @@ patientRouter.post('/', (req, res) => {
     const added = patientService.addPatient(newPatient);
     res.json(added);
   } catch (e) {
-    res.status(400).send("Something went wrong");
+    res.status(400).send("Something went wrong when adding new patient");
   }
 });
 

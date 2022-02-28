@@ -27,6 +27,9 @@ const isArray = (arr: unknown): arr is Array<Entry> => {
 };
 
 export const parseEntries = (entries: unknown): Entry[] => {
+  if (entries === undefined) {
+    return [];
+  }
   if (!isArray(entries)) {
     throw new Error('Cannot parse entries');
   }
