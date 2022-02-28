@@ -40,6 +40,7 @@ export const reducer = (state: State, action: Action): State => {
         }
       };
     case "GET_PATIENT":
+      console.log("Getting patient");
       return {
         ...state,
         patients: {
