@@ -16,10 +16,6 @@ export type Action =
     type: "GET_PATIENT";
     payload: Patient;
   }
-  | {
-    type: "UPDATE_PATIENT";
-    payload: Patient;
-  }
   ;
 
 export const setPatientList = (fetchedPatientList: Patient[]): Action => {
@@ -32,10 +28,6 @@ export const addPatient = (newPatient: Patient): Action => {
 
 export const getPatient = (patientData: Patient): Action => {
   return { type: 'GET_PATIENT', payload: patientData };
-};
-
-export const updatePatient = (patientData: Patient): Action => {
-  return { type: 'UPDATE_PATIENT', payload: patientData };
 };
 
 export const reducer = (state: State, action: Action): State => {

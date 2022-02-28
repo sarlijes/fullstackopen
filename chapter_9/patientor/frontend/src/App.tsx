@@ -5,7 +5,7 @@ import { Container } from "semantic-ui-react";
 import { PatientDetails } from "./components/PatientData";
 
 import { apiBaseUrl } from "./constants";
-import { useStateValue } from "./state";
+import { useStateValue, setPatientList } from "./state";
 import { Patient } from "./types";
 
 import PatientListPage from "./PatientListPage";
@@ -22,7 +22,7 @@ const App = () => {
           `${apiBaseUrl}/patients`
         );
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+        dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
       }

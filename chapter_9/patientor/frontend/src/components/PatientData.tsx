@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { Patient } from '../types';
 import { apiBaseUrl } from '../constants';
-import { useStateValue, updatePatient } from '../state';
+import { useStateValue, getPatient } from '../state';
 
 export const PatientDetails: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -14,16 +14,12 @@ export const PatientDetails: React.FC = () => {
   const { id: id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    const getPatient = async function () {
+    const getPat = async function () {
       try {
         const { data: patientData } = await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`
         );
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        dispatch({ type: 'GET_PATIENT', payload: patientData });
-        // dispatch(getPatient(patientData));
-        // dispatch(getPatient(patientData));'
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        dispatch(updatePatient(patientData));
+        dispatch(getPatient(patientData));
         setSelectedPatient(patientData);
       } catch (error) {
         console.log(error);
@@ -32,7 +28,7 @@ export const PatientDetails: React.FC = () => {
     if (patients[id] && patients[id].ssn) {
       setSelectedPatient(patients[id]);
     } else {
-      void getPatient();
+      void getPat();
     }
   }, [id]);
 
