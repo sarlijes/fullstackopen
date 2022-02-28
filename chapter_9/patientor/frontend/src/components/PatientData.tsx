@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { Container, Table } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 
 import { Patient, Entry } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue, getPatient } from '../state';
+import EntryDetails from './EntryDetails';
 
 export const PatientDetails: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const [{ patients, diagnoses }, dispatch] = useStateValue();
+  const [{ patients }, dispatch] = useStateValue();
   const [selectedPatient, setSelectedPatient] = useState<Patient | undefined>();
   const { id: id } = useParams<{ id: string }>();
 
@@ -46,32 +46,12 @@ export const PatientDetails: React.FC = () => {
       <h2>{selectedPatient.occupation}</h2>
       <div>SSN: {selectedPatient.ssn}</div>
       <div>{selectedPatient.gender}</div>
-      <Container textAlign="center">
-        <h3>Entries</h3>
-      </Container>
-      <Table celled>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>Date</Table.HeaderCell>
-            <Table.HeaderCell>Description</Table.HeaderCell>
-            <Table.HeaderCell>Diagnosis codes</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {console.log(entries)}
-          {entries.map((e: Entry) => (
-            <Table.Row key={e.id}>
-              <Table.Cell>{e.date}</Table.Cell>
-              <Table.Cell>{e.description}</Table.Cell>
-              <Table.Cell>{e.diagnosisCodes?.map((code) =>
-              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-              (diagnoses[code] !== undefined ? `${code} (${diagnoses[code].name})`
-                : "")).join(", \n")}
-              </Table.Cell>
-            </Table.Row>
-          ))}
-        </Table.Body>
-      </Table>
+      <h2>Entries</h2>
+
+      {entries.map((e: Entry) => (
+        <EntryDetails key={e.id} entry={e} />
+
+      ))}
       <Link to={`/}`}>back</Link>
     </div >
   );
