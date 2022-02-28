@@ -28,9 +28,7 @@ const PatientListPage = () => {
         `${apiBaseUrl}/patients`,
         values
       );
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       dispatch(addPatient(newPatient));
-
       closeModal();
     } catch (e) {
       console.error('Unknown Error');

@@ -8,7 +8,6 @@ type EntryProps = {
 };
 
 const BaseEntryData = ({ entry }: EntryProps) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [{ diagnoses }] = useStateValue();
   return (
     <>
@@ -19,7 +18,6 @@ const BaseEntryData = ({ entry }: EntryProps) => {
       <Card.Content><strong>Diagnoses: </strong>
         {
           entry.diagnosisCodes?.map((code) =>
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           (diagnoses[code] !== undefined ? `${code} (${diagnoses[code].name})`
             : "")).join(", \n")
         }

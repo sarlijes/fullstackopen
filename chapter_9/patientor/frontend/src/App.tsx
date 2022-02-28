@@ -11,7 +11,6 @@ import { Diagnosis, Patient } from "./types";
 import PatientListPage from "./PatientListPage";
 
 const App = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [, dispatch] = useStateValue();
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
@@ -21,7 +20,6 @@ const App = () => {
         const { data: patientListFromApi } = await axios.get<Patient[]>(
           `${apiBaseUrl}/patients`
         );
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         dispatch(setPatientList(patientListFromApi));
       } catch (e) {
         console.error(e);
@@ -34,7 +32,6 @@ const App = () => {
         const { data: diagnosisListFromApi } = await axios.get<Diagnosis[]>(
           `${apiBaseUrl}/diagnoses`
         );
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         dispatch(setDiagnosisList(diagnosisListFromApi));
       } catch (e) {
         console.error(e);

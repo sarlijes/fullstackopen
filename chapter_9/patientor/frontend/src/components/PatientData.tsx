@@ -10,7 +10,6 @@ import { useStateValue, getPatient } from '../state';
 import EntryDetails from './EntryDetails';
 
 export const PatientDetails: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [{ patients }, dispatch] = useStateValue();
   const [selectedPatient, setSelectedPatient] = useState<Patient | undefined>();
   const { id: id } = useParams<{ id: string }>();
@@ -21,7 +20,6 @@ export const PatientDetails: React.FC = () => {
         const { data: patientData } =
           await axios.get<Patient>(`${apiBaseUrl}/patients/${id}`
           );
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         dispatch(getPatient(patientData));
         setSelectedPatient(patientData);
       } catch (error) {
@@ -38,7 +36,6 @@ export const PatientDetails: React.FC = () => {
   if (!selectedPatient) {
     return null;
   }
-
   const entries = selectedPatient.entries;
 
   return (
@@ -53,11 +50,7 @@ export const PatientDetails: React.FC = () => {
           <EntryDetails key={e.id} entry={e} />
         ))}
       </Card.Group>
-
-
       <Link to={`/}`}>back</Link>
     </div >
   );
 };
-
-//date, description and diagnose codes of the patient's entries.
