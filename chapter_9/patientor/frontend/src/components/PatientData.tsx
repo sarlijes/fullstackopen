@@ -8,6 +8,7 @@ import { Patient, Entry } from '../types';
 import { apiBaseUrl } from '../constants';
 import { useStateValue, getPatient } from '../state';
 import EntryDetails from './EntryDetails';
+import { AddEntryForm } from './AddEntryForm';
 
 export const PatientDetails: React.FC = () => {
   const [{ patients }, dispatch] = useStateValue();
@@ -51,6 +52,7 @@ export const PatientDetails: React.FC = () => {
         ))}
       </Card.Group>
       <Link to={`/}`}>back</Link>
+      <AddEntryForm />
     </div >
   );
 };
