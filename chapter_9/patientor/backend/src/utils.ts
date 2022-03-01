@@ -76,6 +76,7 @@ type EntryFields = {
   specialist: string;
   diagnosisCodes: Array<Diagnosis['code']>;
   type: string
+  // TODO link to Patient
 };
 
 // export default { toNewPatient, toNewEntry };
