@@ -34,9 +34,9 @@ patientRouter.post('/:id/entries', (req, res) => {
   try {
     const fields: EntryFields = {
       description: req.body.description,
-      specialist: req.body.description,
-      diagnosisCodes: req.body.description,
-      type: req.body.description,
+      specialist: req.body.specialist,
+      diagnosisCodes: req.body.diagnosisCodes,
+      type: req.body.type,
       patientId: req.params.id
     };
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument

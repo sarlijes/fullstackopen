@@ -78,7 +78,4 @@ export type EntryFields = {
   diagnosisCodes: Array<Diagnosis['code']>;
   type: string;
   patientId: Patient['id'];
-  // TODO link to Patient
 };
-
-// export default { toNewPatient, toNewEntry };
