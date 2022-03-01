@@ -1,7 +1,7 @@
 import { NewPatient, Gender, Entry, Diagnosis, NewEntry } from './types';
 
 // TODO rename to parseString
-const parseName = (s: unknown): string => {
+const parseString = (s: unknown): string => {
   if (!s || !isString(s)) {
     throw new Error('Incorrect or missing information');
   }
@@ -40,23 +40,24 @@ export const parseEntries = (entries: unknown): Entry[] => {
 export const toNewPatient = ({ name, dateOfBirth, ssn,
   gender, occupation, entries }: Fields): NewPatient => {
   const newEntry: NewPatient = {
-    name: parseName(name),
-    dateOfBirth: parseName(dateOfBirth),
-    ssn: parseName(ssn),
+    name: parseString(name),
+    dateOfBirth: parseString(dateOfBirth),
+    ssn: parseString(ssn),
     gender: parseGender(gender),
-    occupation: parseName(occupation),
+    occupation: parseString(occupation),
     entries: parseEntries(entries)
   };
   return newEntry;
 };
 
 export const toNewEntry = ({ description, specialist,
-  diagnosisCodes }: EntryFields): NewEntry => {
+  diagnosisCodes, type }: EntryFields): NewEntry => {
   const newEntry: NewEntry = {
-    description: parseName(description),
+    description: parseString(description),
     date: '2022-03-01', // TODO hard-coded
-    specialist: parseName(specialist),
-    diagnosisCodes: diagnosisCodes
+    specialist: parseString(specialist),
+    diagnosisCodes: diagnosisCodes,
+    type: parseString(type)
   };
   return newEntry;
 };
@@ -74,6 +75,7 @@ type EntryFields = {
   description: string;
   specialist: string;
   diagnosisCodes: Array<Diagnosis['code']>;
+  type: string
 };
 
 // export default { toNewPatient, toNewEntry };

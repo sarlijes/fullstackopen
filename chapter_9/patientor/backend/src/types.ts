@@ -65,6 +65,7 @@ interface BaseEntry {
   date: string;
   specialist: string;
   diagnosisCodes?: Array<Diagnosis['code']>;
+  type: string;
 }
 
 export type PublicPatient = Omit<Patient, 'ssn' | 'entries'>;

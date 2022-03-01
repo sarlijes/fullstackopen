@@ -28,12 +28,12 @@ const listNonSensitive = (): Omit<Patient, "ssn">[] => {
 };
 
 const addPatient = (entry: Omit<NewPatient, "id">): Patient => {
-  const newDiaryEntry = {
+  const newPatient = {
     id: uuid(),
     ...entry
   };
-  patients.push(newDiaryEntry);
-  return newDiaryEntry;
+  patients.push(newPatient);
+  return newPatient;
 };
 
 export default {
