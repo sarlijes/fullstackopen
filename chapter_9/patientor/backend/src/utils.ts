@@ -1,5 +1,6 @@
-import { NewPatient, Gender, Entry } from './types';
+import { NewPatient, Gender, Entry, Diagnosis, NewEntry } from './types';
 
+// TODO rename to parseString
 const parseName = (s: unknown): string => {
   if (!s || !isString(s)) {
     throw new Error('Incorrect or missing information');
@@ -36,7 +37,7 @@ export const parseEntries = (entries: unknown): Entry[] => {
   return entries;
 };
 
-const toNewPatient = ({ name, dateOfBirth, ssn,
+export const toNewPatient = ({ name, dateOfBirth, ssn,
   gender, occupation, entries }: Fields): NewPatient => {
   const newEntry: NewPatient = {
     name: parseName(name),
@@ -45,6 +46,17 @@ const toNewPatient = ({ name, dateOfBirth, ssn,
     gender: parseGender(gender),
     occupation: parseName(occupation),
     entries: parseEntries(entries)
+  };
+  return newEntry;
+};
+
+export const toNewEntry = ({ description, specialist,
+  diagnosisCodes }: EntryFields): NewEntry => {
+  const newEntry: NewEntry = {
+    description: parseName(description),
+    date: '2022-03-01', // TODO hard-coded
+    specialist: parseName(specialist),
+    diagnosisCodes: diagnosisCodes
   };
   return newEntry;
 };
@@ -58,4 +70,10 @@ type Fields = {
   entries: unknown
 };
 
-export default toNewPatient;
+type EntryFields = {
+  description: string;
+  specialist: string;
+  diagnosisCodes: Array<Diagnosis['code']>;
+};
+
+// export default { toNewPatient, toNewEntry };
