@@ -1,4 +1,4 @@
-import { NewPatient, Gender, Entry, Diagnosis, NewEntry } from './types';
+import { NewPatient, Gender, Entry, Diagnosis, NewEntry, Patient } from './types';
 
 // TODO rename to parseString
 const parseString = (s: unknown): string => {
@@ -51,13 +51,14 @@ export const toNewPatient = ({ name, dateOfBirth, ssn,
 };
 
 export const toNewEntry = ({ description, specialist,
-  diagnosisCodes, type }: EntryFields): NewEntry => {
+  diagnosisCodes, type, patientId }: EntryFields): NewEntry => {
   const newEntry: NewEntry = {
     description: parseString(description),
     date: '2022-03-01', // TODO hard-coded
     specialist: parseString(specialist),
     diagnosisCodes: diagnosisCodes,
-    type: parseString(type)
+    type: parseString(type),
+    patientId: patientId
   };
   return newEntry;
 };
@@ -71,11 +72,12 @@ type Fields = {
   entries: unknown
 };
 
-type EntryFields = {
+export type EntryFields = {
   description: string;
   specialist: string;
   diagnosisCodes: Array<Diagnosis['code']>;
-  type: string
+  type: string;
+  patientId: Patient['id'];
   // TODO link to Patient
 };
 

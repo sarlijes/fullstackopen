@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import express from 'express';
 import patientService from '../services/patientService';
 import entryService from '../services/entryService';
-import { toNewPatient, toNewEntry } from '../utils';
+import { toNewPatient, toNewEntry, EntryFields } from '../utils';
 
 const patientRouter = express.Router();
 
@@ -31,8 +32,15 @@ patientRouter.post('/', (req, res) => {
 
 patientRouter.post('/:id/entries', (req, res) => {
   try {
+    const fields: EntryFields = {
+      description: req.body.description,
+      specialist: req.body.description,
+      diagnosisCodes: req.body.description,
+      type: req.body.description,
+      patientId: req.params.id
+    };
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    const newEntry = toNewEntry(req.body);
+    const newEntry = toNewEntry(fields);
     const added = entryService.addEntry(newEntry);
     res.json(added);
   } catch (e) {

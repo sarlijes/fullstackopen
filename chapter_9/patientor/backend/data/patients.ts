@@ -22,6 +22,7 @@ const patients: Patient[] = [
           date: '2015-01-16',
           criteria: 'Thumb has healed.',
         },
+        patientId: 'd2773336-f723-11e9-8f0b-362b9e155667'
       },
       {
         id: 'fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62',
@@ -36,6 +37,7 @@ const patients: Patient[] = [
           startDate: '2019-08-05',
           endDate: '2019-08-28',
         },
+        patientId: 'd2773336-f723-11e9-8f0b-362b9e155667'
       },
       {
         id: 'b4f4eca1-2aa7-4b13-9a18-4a5535c3c8da',
@@ -44,6 +46,7 @@ const patients: Patient[] = [
         type: 'HealthCheck',
         description: 'Yearly control visit. Cholesterol levels back to normal.',
         healthCheckRating: 0,
+        patientId: 'd2773336-f723-11e9-8f0b-362b9e155667'
       },
     ],
   },
@@ -68,6 +71,7 @@ const patients: Patient[] = [
           startDate: '2019-08-05',
           endDate: '2019-08-28',
         },
+        patientId: 'd2773598-f723-11e9-8f0b-362b9e155667'
       },
     ],
   },
@@ -95,6 +99,7 @@ const patients: Patient[] = [
         type: 'HealthCheck',
         description: 'Yearly control visit. Cholesterol levels back to normal.',
         healthCheckRating: 0,
+        patientId: 'd2773822-f723-11e9-8f0b-362b9e155667'
       },
       {
         id: 'fcd59fa6-c4b4-4fec-ac4d-df4fe1f85f62',
@@ -103,6 +108,7 @@ const patients: Patient[] = [
         type: 'OccupationalHealthcare',
         employerName: 'FBI',
         description: 'Prescriptions renewed.',
+        patientId: 'd2773822-f723-11e9-8f0b-362b9e155667'
       },
       {
         id: '37be178f-a432-4ba4-aac2-f86810e36a15',
@@ -112,6 +118,7 @@ const patients: Patient[] = [
         description:
           'Yearly control visit. Due to high cholesterol levels recommended to eat more vegetables.',
         healthCheckRating: 1,
+        patientId: 'd2773822-f723-11e9-8f0b-362b9e155667'
       },
     ],
   },
@@ -130,6 +137,7 @@ const patients: Patient[] = [
         type: 'HealthCheck',
         description: 'Digital overdose, very bytestatic. Otherwise healthy.',
         healthCheckRating: 0,
+        patientId: 'd2773c6e-f723-11e9-8f0b-362b9e155667'
       },
     ],
   },
