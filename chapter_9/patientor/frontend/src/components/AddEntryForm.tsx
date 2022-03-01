@@ -10,25 +10,8 @@ import { apiBaseUrl } from "../constants";
 
 export type EntryFormValues = Omit<Entry, "id" | "date">;
 
-// interface Props {
-//   onSubmit: (values: EntryFormValues) => void;
-//   onCancel: () => void;
-// }
-
-// interface BaseEntry {
-//   id: string;
-//   description: string;
-//   date: string;
-//   specialist: string;
-//   diagnosisCodes?: Array<Diagnosis['code']>;
-//   type: string;
-//   patientId: Patient['id'];
-// }
-
-// export const AddEntryForm = ({ onCancel }: Props) => {
 export const AddEntryForm = () => {
-  const [{ patients: patients }, dispatch] = useStateValue();
-  console.log(patients.size);
+  const [, dispatch] = useStateValue();
   const { id: patientId } = useParams<{ id: string }>();
 
   const onSubmit = async (values: EntryFormValues) => {
@@ -38,18 +21,10 @@ export const AddEntryForm = () => {
         values
       );
       dispatch(addEntry(newEntry));
-      // closeModal();
     } catch (e) {
       console.error('Unknown Error');
-      // setError('Unknown error');
     }
   };
-
-  const onCancel = () => {
-    console.log("cancel");
-  };
-
-
   const [{ diagnoses }] = useStateValue();
 
   return (
@@ -77,7 +52,7 @@ export const AddEntryForm = () => {
         return errors;
       }}
     >
-      {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
+      {({ isValid, dirty, setFieldValue, setFieldTouched, resetForm }) => {
 
         return (
           <Form className="form ui">
@@ -99,16 +74,14 @@ export const AddEntryForm = () => {
               name="type"
               component={TextField}
             />
-
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
               diagnoses={Object.values(diagnoses)}
             />
-
             <Grid>
               <Grid.Column floated="left" width={5}>
-                <Button type="button" onClick={onCancel} color="red">
+                <Button type="button" onClick={() => resetForm()} color="red">
                   Cancel
                 </Button>
               </Grid.Column>
@@ -123,7 +96,6 @@ export const AddEntryForm = () => {
                 </Button>
               </Grid.Column>
             </Grid>
-
           </Form>
         );
       }}
