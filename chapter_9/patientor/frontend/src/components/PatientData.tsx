@@ -11,7 +11,7 @@ import EntryDetails from './EntryDetails';
 import { AddEntryForm } from './AddEntryForm';
 
 export const PatientDetails: React.FC = () => {
-  const [{ patients }, dispatch] = useStateValue();
+  const [{ patients: patients }, dispatch] = useStateValue();
   const [selectedPatient, setSelectedPatient] = useState<Patient | undefined>();
   const { id: id } = useParams<{ id: string }>();
 

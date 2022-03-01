@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
-import { Diagnosis, Patient } from "../types";
+import { Diagnosis, Patient, Entry } from "../types";
 
 import { Action } from "./reducer";
 
@@ -7,11 +7,13 @@ export type State = {
   patients: { [id: string]: Patient };
   patientDetails?: Patient;
   diagnoses: { [id: string]: Diagnosis };
+  entries: { [id: string]: Entry };
 };
 
 const initialState: State = {
   patients: {},
-  diagnoses: {}
+  diagnoses: {},
+  entries: {}
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

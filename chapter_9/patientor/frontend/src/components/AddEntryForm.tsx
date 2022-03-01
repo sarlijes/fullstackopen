@@ -1,10 +1,12 @@
 import React from 'react';
-// import React, { useState, useEffect } from 'react';
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 import { Field, Formik, Form } from "formik";
 import { Grid, Button } from "semantic-ui-react";
 import { Entry } from "../types";
 import { TextField, DiagnosisSelection } from "../AddPatientModal/FormField";
-import { useStateValue } from '../state';
+import { useStateValue, addEntry } from '../state';
+import { apiBaseUrl } from "../constants";
 
 export type EntryFormValues = Omit<Entry, "id" | "date">;
 
@@ -23,28 +25,31 @@ export type EntryFormValues = Omit<Entry, "id" | "date">;
 //   patientId: Patient['id'];
 // }
 
-const onSubmit = () => {
-  console.log("submit");
-  // const onSubmit = async (values: PatientFormValues) => {
-  // try {
-  //   const { data: newPatient } = await axios.post<Patient>(
-  //     `${apiBaseUrl}/patients`,
-  //     values
-  //   );
-  //   dispatch(addPatient(newPatient));
-  //   closeModal();
-  // } catch (e) {
-  //   console.error('Unknown Error');
-  //   setError('Unknown error');
-  // }
-};
-
-const onCancel = () => {
-  console.log("cancel");
-};
-
 // export const AddEntryForm = ({ onCancel }: Props) => {
 export const AddEntryForm = () => {
+  const [{ patients: patients }, dispatch] = useStateValue();
+  console.log(patients.size);
+  const { id: patientId } = useParams<{ id: string }>();
+
+  const onSubmit = async (values: EntryFormValues) => {
+    try {
+      const { data: newEntry } = await axios.post<Entry>(
+        `${apiBaseUrl}/patients/${patientId}/entries`,
+        values
+      );
+      dispatch(addEntry(newEntry));
+      // closeModal();
+    } catch (e) {
+      console.error('Unknown Error');
+      // setError('Unknown error');
+    }
+  };
+
+  const onCancel = () => {
+    console.log("cancel");
+  };
+
+
   const [{ diagnoses }] = useStateValue();
 
   return (
